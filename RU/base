@@ -106,14 +106,13 @@ while
     2 - GRUB-legacy
     
     0 - exit " menu # sends right after the keypress
-    echo ''
+#    echo ''
     [[ "$menu" =~ [^120] ]]
 do
-    :
+    : echo'passed'
 done
 if [[ $menu == 1 ]]; then
 clear
-echo'passed'
 ###################################################
 ################часть первая#######################
 pacman -Sy --noconfirm
