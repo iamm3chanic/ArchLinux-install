@@ -61,7 +61,7 @@ while
 do
     :
 done
- if [[ $x_key == 1 ]]; then
+if [[ $x_key == 1 ]]; then
   clear
   pacman-key --refresh-keys 
   elif [[ $x_key == 0 ]]; then
@@ -113,6 +113,7 @@ do
 done
 if [[ $menu == 1 ]]; then
 clear
+echo'passed'
 ###################################################
 ################часть первая#######################
 pacman -Sy --noconfirm
