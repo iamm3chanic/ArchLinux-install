@@ -160,13 +160,13 @@ while
     read -n1 -p  "
     1 - да
     
-    0 - нет: " cfdisk # sends right after the keypress
+    0 - нет: " cfdis # sends right after the keypress
     echo ''
-    [[ "$cfdisk" =~ [^10] ]]
+    [[ "$cfdis" =~ [^10] ]]
 do
     :
 done
- if [[ $cfdisk == 1 ]]; then
+ if [[ $cfdis == 1 ]]; then
    clear
  lsblk -f
   echo "Сейчас будет провдиться разметка диска."
@@ -179,7 +179,7 @@ done
 cfdisk /dev/$cfd
 echo ""
 clear
-elif [[ $cfdisk == 0 ]]; then
+elif [[ $cfdis == 0 ]]; then
    echo ""
    clear
    echo 'разметка пропущена.'   
@@ -486,13 +486,13 @@ while
    read -n1 -p  "
    1 - да
     
-   0 - нет: " cfdisk # sends right after the keypress
+   0 - нет: " cfdis # sends right after the keypress
     echo ''
-    [[ "$cfdisk" =~ [^10] ]]
+    [[ "$cfdis" =~ [^10] ]]
 do
    :
 done
- if [[ $cfdisk == 1 ]]; then
+ if [[ $cfdis == 1 ]]; then
   clear
  lsblk -f
   echo ""
@@ -504,7 +504,7 @@ done
   echo "       2 раздела, объединенные ЛВМ"
 read -p " Укажите диск (например, sda или nvme0n1) " cfd
 cfdisk /dev/$cfd
-elif [[ $cfdisk == 0 ]]; then
+elif [[ $cfdis == 0 ]]; then
 echo 'разметка пропущена.'   
 fi
 #
