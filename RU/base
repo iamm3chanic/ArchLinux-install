@@ -257,6 +257,9 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+  ######################################################вот тут может быть не то
+  cryptsetup -y luksFormat --type luks2 /dev/$home
+  cryptsetup open /dev/$home cryptlvm
  # mkdir /mnt/boot #did above
  # mount /dev/sda1 /mnt/boot/ #did above
 #echo 'Добавим раздел  HOME ?'
@@ -451,11 +454,11 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh
+  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   chmod +x /mnt/chroot.sh 
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
-  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot.sh ' 
+  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
   arch-chroot /mnt      
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
@@ -463,7 +466,7 @@ echo "################################################################"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
-  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh)"
+  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
@@ -776,11 +779,11 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh
+  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   chmod +x /mnt/chroot.sh 
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
-  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot.sh ' 
+  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
   arch-chroot /mnt      
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
@@ -788,7 +791,7 @@ echo "################################################################"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
-  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh)"
+  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
