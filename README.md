@@ -18,4 +18,4 @@ After successful connection, write:
 ```
 ### Thanks a lot:
 - Helper: github.com/poruncov
-- Tester: github.com/frutitutitut
+- Tester&Bro: github.com/frutitutitut
