@@ -98,7 +98,7 @@ echo "#################################################"
 echo ""
 efibootmgr
 echo ""
-echo " UEFI( no grub ) или Grub-legcy? "
+echo " UEFI( no grub ) или Grub-legacy? "
 while 
     read -n1 -p  "
     1 - UEFI
@@ -107,9 +107,9 @@ while
     
     0 - exit " menu # sends right after the keypress
 #    echo ''
-    [[ "$menu" =~ [^120] ]]
+[[ "$menu" =~ [^120] ]]
 do
-    : echo'passed'
+    : 
 done
 if [[ $menu == 1 ]]; then
 clear
