@@ -11,9 +11,11 @@ Then boot from this disk and connect to the Internet somehow:
 ```
 After successful connection, write:
 ```bash
-# wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
-#  chmod +x base
+ pacman -Sy wget
+ wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
+ chmod +x base
+ ./base
 ```
 ### Thanks a lot:
-- github.com/poruncov
-- github.com/frutitutitut
+- Helper: github.com/poruncov
+- Tester: github.com/frutitutitut
