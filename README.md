@@ -1,5 +1,5 @@
 # ArchLinux-install
-##EN
+## EN
 #### Be careful - the script might have some inacurracies.
 To start with, make an insallation disk as it is described here:
 ```
@@ -27,7 +27,7 @@ For your comfort:
 - Helper&Base: github.com/poruncov
 - Tester&Bro: github.com/frutitutitut
 
-##RU
+## RU
 #### Будьте внимательны - в скрипте могут быть неточности.
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
