@@ -521,45 +521,6 @@ fi
 #UUUUUUUUUUUUUUUUUUUUUUUUUU
 
 ##############################
-clear
-echo ""
-echo " Выбирайте "1 ", если ранее не производилась разметка диска и у вас нет разделов для ArchLinux "
-echo " Лучше выбрать 1, иначе можем не туда поставить ЛВМ!"
-echo ""
-echo 'Нужна разметка диска?'
-while 
-    read -n1 -p  "
-    1 - да
-    
-    0 - нет: " cfdisk # sends right after the keypress
-    echo ''
-    [[ "$cfdisk" =~ [^10] ]]
-do
-    :
-done
- if [[ $cfdisk == 1 ]]; then
-   clear
- lsblk -f
-  echo "Сейчас будет провдиться разметка диска."
-  echo "Создайте 3 раздела: sda1 с флагом boot тип linux 83;"
-  echo "                    sda2 тип linux 82 solaris"
-  echo "                    sda3 тип linux 83"
-  echo "       будьте внимательны, на sda3 потом появятся"
-  echo "       2 раздела, объединенные ЛВМ"
-  read -p "Укажите диск (например sda или nvme0n1) : " cfd
-cfdisk /dev/$cfd
-echo ""
-clear
-elif [[ $cfdisk == 0 ]]; then
-   echo ""
-   clear
-   echo 'разметка пропущена.'   
-fi
-#
-  clear
-  lsblk -f
-  echo ""
- 
 ########## boot  ########
 echo ' добавим и отформатируем BOOT?'
 echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "
