@@ -336,7 +336,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 fi
 #############################################################
 #########################################################
-##########################прописать хуй, ой, хук
+##########################прописать хук
 echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
 	#    usr, fsck and shutdown hooks.
 	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
