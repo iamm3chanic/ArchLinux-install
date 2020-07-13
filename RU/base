@@ -1,5 +1,5 @@
 #!/bin/bash
-bash
+#bash
 loadkeys ru
 setfont cyr-sun16
 modprobe dm-mod
@@ -61,7 +61,7 @@ while
 do
     :
 done
- if [[ $x_key == 1 ]]; then
+if [[ $x_key == 1 ]]; then
   clear
   pacman-key --refresh-keys 
   elif [[ $x_key == 0 ]]; then
@@ -98,7 +98,7 @@ echo "#################################################"
 echo ""
 efibootmgr
 echo ""
-echo " UEFI( no grub ) или Grub-legcy? "
+echo " UEFI( no grub ) или Grub-legacy? "
 while 
     read -n1 -p  "
     1 - UEFI
@@ -106,16 +106,15 @@ while
     2 - GRUB-legacy
     
     0 - exit " menu # sends right after the keypress
-    echo ''
-    [[ "$menu" =~ [^120] ]]
+#    echo ''
+[[ "$menu" =~ [^120] ]]
 do
-    :
+    : 
 done
-###################################################
-################часть первая#######################
 if [[ $menu == 1 ]]; then
 clear
-
+###################################################
+################часть первая#######################
 pacman -Sy --noconfirm
 echo ""
 lsblk -f
@@ -161,13 +160,13 @@ while
     read -n1 -p  "
     1 - да
     
-    0 - нет: " cfdisk # sends right after the keypress
+    0 - нет: " cfdis # sends right after the keypress
     echo ''
-    [[ "$cfdisk" =~ [^10] ]]
+    [[ "$cfdis" =~ [^10] ]]
 do
     :
 done
- if [[ $cfdisk == 1 ]]; then
+ if [[ $cfdis == 1 ]]; then
    clear
  lsblk -f
   echo "Сейчас будет провдиться разметка диска."
@@ -180,7 +179,7 @@ done
 cfdisk /dev/$cfd
 echo ""
 clear
-elif [[ $cfdisk == 0 ]]; then
+elif [[ $cfdis == 0 ]]; then
    echo ""
    clear
    echo 'разметка пропущена.'   
@@ -258,6 +257,9 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+  ######################################################вот тут может быть не то
+  cryptsetup -y luksFormat --type luks2 /dev/$home
+  cryptsetup open /dev/$home cryptlvm
  # mkdir /mnt/boot #did above
  # mount /dev/sda1 /mnt/boot/ #did above
 #echo 'Добавим раздел  HOME ?'
@@ -452,11 +454,11 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh
+  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   chmod +x /mnt/chroot.sh 
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
-  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot.sh ' 
+  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
   arch-chroot /mnt      
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
@@ -464,7 +466,7 @@ echo "################################################################"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
-  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh)"
+  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
@@ -475,6 +477,7 @@ fi
 #####################################
 ###############часть вторая##########
 elif [[ $menu == 2 ]]; then 
+clear
 echo "Добро пожаловать в установку ArchLinux режим GRUB-Legacy "
 lsblk -f
 echo ""
@@ -486,13 +489,13 @@ while
    read -n1 -p  "
    1 - да
     
-   0 - нет: " cfdisk # sends right after the keypress
+   0 - нет: " cfdis # sends right after the keypress
     echo ''
-    [[ "$cfdisk" =~ [^10] ]]
+    [[ "$cfdis" =~ [^10] ]]
 do
    :
 done
- if [[ $cfdisk == 1 ]]; then
+ if [[ $cfdis == 1 ]]; then
   clear
  lsblk -f
   echo ""
@@ -504,7 +507,7 @@ done
   echo "       2 раздела, объединенные ЛВМ"
 read -p " Укажите диск (например, sda или nvme0n1) " cfd
 cfdisk /dev/$cfd
-elif [[ $cfdisk == 0 ]]; then
+elif [[ $cfdis == 0 ]]; then
 echo 'разметка пропущена.'   
 fi
 #
@@ -518,45 +521,6 @@ fi
 #UUUUUUUUUUUUUUUUUUUUUUUUUU
 
 ##############################
-clear
-echo ""
-echo " Выбирайте "1 ", если ранее не производилась разметка диска и у вас нет разделов для ArchLinux "
-echo " Лучше выбрать 1, иначе можем не туда поставить ЛВМ!"
-echo ""
-echo 'Нужна разметка диска?'
-while 
-    read -n1 -p  "
-    1 - да
-    
-    0 - нет: " cfdisk # sends right after the keypress
-    echo ''
-    [[ "$cfdisk" =~ [^10] ]]
-do
-    :
-done
- if [[ $cfdisk == 1 ]]; then
-   clear
- lsblk -f
-  echo "Сейчас будет провдиться разметка диска."
-  echo "Создайте 3 раздела: sda1 с флагом boot тип linux 83;"
-  echo "                    sda2 тип linux 82 solaris"
-  echo "                    sda3 тип linux 83"
-  echo "       будьте внимательны, на sda3 потом появятся"
-  echo "       2 раздела, объединенные ЛВМ"
-  read -p "Укажите диск (например sda или nvme0n1) : " cfd
-cfdisk /dev/$cfd
-echo ""
-clear
-elif [[ $cfdisk == 0 ]]; then
-   echo ""
-   clear
-   echo 'разметка пропущена.'   
-fi
-#
-  clear
-  lsblk -f
-  echo ""
- 
 ########## boot  ########
 echo ' добавим и отформатируем BOOT?'
 echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "
@@ -776,11 +740,11 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh
+  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   chmod +x /mnt/chroot.sh 
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
-  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot.sh ' 
+  echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
   arch-chroot /mnt      
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
@@ -788,13 +752,13 @@ echo "################################################################"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
-  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/poruncov/archlinux-script-install/master/chroot.sh)"
+  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 umount -a
 reboot  
-
+fi
 
 ##############################################
 elif [[ $menu == 0 ]]; then
