@@ -92,7 +92,8 @@ reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 
 pacman -Syy
 
-bootctl install #uefi
+#uefi
+bootctl install 
 
 echo ' default arch ' > /boot/loader/loader.conf
 echo ' timeout 10 ' >> /boot/loader/loader.conf
