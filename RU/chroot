@@ -474,7 +474,7 @@ do
     :
 done
 if [[ $i_kde  == 0 ]]; then
-echo " буду использовами DM "
+echo "используем DM "
 elif [[ $i_kde  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -508,7 +508,7 @@ do
     :
 done
 if [[ $i_xfce  == 0 ]]; then
-echo " буду использовами DM "
+echo " используем DM "
 elif [[ $i_xfce  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -545,7 +545,7 @@ do
     :
 done
 if [[ $i_lxde  == 0 ]]; then
-echo " буду использовами DM "
+echo " используем DM "
 elif [[ $i_lxde  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -578,7 +578,7 @@ do
     :
 done
 if [[ $i_deepin  == 0 ]]; then
-echo " буду использовами DM "
+echo " используем DM "
 elif [[ $i_deepin  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -611,7 +611,7 @@ do
     :
 done
 if [[ $i_mate  == 0 ]]; then
-echo " буду использовами DM "
+echo " используем DM "
 elif [[ $i_mate  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -644,7 +644,7 @@ do
     :
 done
 if [[ $i_lxqt  == 0 ]]; then
-echo " буду использовами DM "
+echo "используем DM "
 elif [[ $i_lxqt  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
@@ -678,7 +678,7 @@ do
     :
 done
 if [[ $i_i3w  == 0 ]]; then
-echo " буду использовами DM "
+echo " используем DM "
 elif [[ $i_i3w  == 1 ]]; then
 pacman -S xorg-xinit --noconfirm
 cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
