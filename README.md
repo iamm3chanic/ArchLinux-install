@@ -48,7 +48,7 @@ For your comfort:
 ```
 После успешного подключения, пишем:
 ```bash
- pacman -Syu wget
+ pacman -Syyu wget
  wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base
  ./base
