@@ -454,7 +454,7 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   mv chroot /mnt
   chmod +x /mnt/chroot
   echo 'первый этап готов ' 
@@ -464,6 +464,7 @@ if [[ $int == 1 ]]; then
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
+read -n 1 -s -r -p "Press any key to continue"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
@@ -471,6 +472,7 @@ reboot
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
+read -n 1 -s -r -p "Press any key to continue"
 umount -a
 reboot  
 
@@ -741,7 +743,7 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
   mv chroot /mnt
   chmod +x /mnt/chroot
   echo 'первый этап готов ' 
@@ -751,6 +753,7 @@ if [[ $int == 1 ]]; then
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
+read -n 1 -s -r -p "Press any key to continue"
 umount -a
 reboot    
   elif [[ $int == 2 ]]; then
@@ -758,6 +761,7 @@ reboot
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
+read -n 1 -s -r -p "Press any key to continue"
 umount -a
 reboot  
 fi
