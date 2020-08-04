@@ -1,6 +1,7 @@
 # ArchLinux-install
 ## EN
 #### Be careful - the script might have some inacurracies.
+#### Read the script before using and edit if necessary.
 To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -37,6 +38,7 @@ For your comfort:
 
 ## RU
 #### Будьте внимательны - в скрипте могут быть неточности.
+#### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -56,7 +58,7 @@ For your comfort:
 Вероятно, не получится другую часть скрипта в /mnt, поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
 ```bash
  pacman -Syyu wget
- wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot
+ wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
  chmod +x chroot
  ./chroot
 ```
