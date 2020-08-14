@@ -55,7 +55,7 @@ For your comfort:
  chmod +x base
  ./base
 ```
-Вероятно, не получится другую часть скрипта в /mnt, поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
+Вероятно, не получится загрузить другую часть скрипта в /mnt, поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
 ```bash
  pacman -Syyu wget
  wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
