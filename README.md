@@ -1,7 +1,7 @@
 # ArchLinux-install
 ## EN
-#### Be careful - the script might have some inacurracies.
-#### Read the script before using and edit if necessary.
+#### Read the script before using and edit if necessary. 
+#### Only ext4 filesystem.
 To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -13,15 +13,16 @@ Then boot from this disk and connect to the Internet somehow:
 ```
 After successful connection, write:
 ```bash
- pacman -Syyu wget
- wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base
+ pacman -Sy
+ curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base
  chmod +x base
  ./base
 ```
-Probably it could fail to download other part of script to /mnt, so after the end of script "base", if see no file named "chroot", do this:
+Probably it could fail to download other part of script to /mnt and change root, especially if iinstalling is processing on VirtualBox. So after the end of script "base", if see no file named "chroot", do this:
 ```bash
- pacman -Syyu wget
- wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot
+ arch-chroot /mnt /bin/bash
+ pacman -Syu 
+ curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot
  chmod +x chroot
  ./chroot
 ```
@@ -37,8 +38,8 @@ For your comfort:
 - Tester&Bro: github.com/frutitutitut
 
 ## RU
-#### Будьте внимательны - в скрипте могут быть неточности.
 #### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
+#### Только для файловой системы ext4.
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -50,15 +51,16 @@ For your comfort:
 ```
 После успешного подключения, пишем:
 ```bash
- pacman -Syyu wget
- wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
+ pacman -Sy
+ curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base
  ./base
 ```
-Вероятно, не получится загрузить другую часть скрипта в /mnt, поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
+Вероятно, не получится загрузить другую часть скрипта в /mnt и сменить root, особенно если установка производится на VirtualBox. Поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
 ```bash
- pacman -Syyu wget
- wget https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+ arch-chroot /mnt /bin/bash
+ pacman -Syu 
+ curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
  chmod +x chroot
  ./chroot
 ```
