@@ -3,6 +3,7 @@ bash
 loadkeys ru
 setfont cyr-sun16
 modprobe dm-mod
+modprobe dm-crypt
 pacman-key --refresh-keys 
 
 pacman -Sy --noconfirm
