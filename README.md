@@ -35,7 +35,7 @@ For your comfort:
 - folder with only raw commads, aka check-list
 ### TODO
 + various cryptsetup
-+ f2f
++ f2fs, btrfs, xfs
 + no LVM version
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov
@@ -77,7 +77,7 @@ For your comfort:
 - папка с чистыми командами, он же чек-лист
 ### TODO
 + various cryptsetup
-+ f2f
++ f2fs, btrfs, xfs
 + no LVM version
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
