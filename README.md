@@ -1,7 +1,7 @@
 # ArchLinux-install
 ## EN
 #### Read the script before using and edit if necessary. 
-#### Only ext4 filesystem.
+#### Only ext4 filesystem. For f2f, visit github.com/poruncov or wait for new version of the script! :)
 To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -33,13 +33,17 @@ For your comfort:
 - 7 DM's to choose (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( with or without DM ))
 - apps to download right after configuring system
 - folder with only raw commads, aka check-list
+### TODO
++ various cryptsetup
++ f2f
++ no LVM version
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov
 - Tester&Bro: github.com/frutitutitut
 
 ## RU
 #### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
-#### Только для файловой системы ext4.
+#### Только для файловой системы ext4. Для f2f, смотрите github.com/poruncov или подождите новую версию скрипта! :)
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -71,6 +75,10 @@ For your comfort:
 - 7 DM на выбор (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( с или без DM ))
 - приложения для загрузки сразу после настройки системы
 - папка с чистыми командами, он же чек-лист
+### TODO
++ various cryptsetup
++ f2f
++ no LVM version
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
 - Тестировщик, бро: github.com/frutitutitut
