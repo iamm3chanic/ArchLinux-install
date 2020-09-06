@@ -338,6 +338,7 @@ fi
 #########################################################
 ##########################прописать хук
 echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
+	Не забудьте проверить наличие хука udev или btrfs, если используете btrfs!
 	#    usr, fsck and shutdown hooks.
 	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
 nano /etc/mkinitcpio.conf
