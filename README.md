@@ -1,7 +1,7 @@
 # ArchLinux-install
 ## EN
 #### Read the script before using and edit if necessary. 
-#### Only ext4 filesystem. For f2f, visit _github.com/poruncov_ or wait for new version of the script! :)
+#### Only ext4 filesystem. For f2f/btrfs, check dev branch! :)
 To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -35,6 +35,7 @@ For your comfort:
 - folder with only raw commads, aka check-list
 ### TODO
 + various cryptsetup
++ f2fs, btrfs, xfs
 + no LVM version
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov
@@ -42,7 +43,7 @@ For your comfort:
 
 ## RU
 #### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
-#### Только для файловой системы ext4. Для f2f, смотрите _github.com/poruncov_ или подождите новую версию скрипта! :)
+#### Только для файловой системы ext4. Для f2f, смотрите dev ветку! :)
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -76,7 +77,9 @@ For your comfort:
 - папка с чистыми командами, он же чек-лист
 ### TODO
 + various cryptsetup
++ f2fs, btrfs, xfs
 + no LVM version
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
 - Тестировщик, бро: github.com/frutitutitut
+
