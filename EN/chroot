@@ -222,6 +222,7 @@ fi
 #########################################################
 ##########################прописать хук
 echo " Editing /etc/mkinitcpio.conf , in HOOKS add lvm2 — right before filesystems:
+       Don't forget to check for a \'udev\' or \'btrfs\' hook if you are using btrfs!
 	#    usr, fsck and shutdown hooks.
 	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
 nano /etc/mkinitcpio.conf
