@@ -205,6 +205,9 @@ echo " Приступаем к созданию логического объе�
 echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
+cryptsetup -y luksFormat --type luks2 /dev/$home
+cryptsetup open /dev/$home cryptlvm
+
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
@@ -235,8 +238,6 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/home /mnt/home/
   ######################################################вот тут может быть не то
   
-  cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvm
 
  clear
 echo 'Добавим разделы  Windows (ntfs/fat32)?'
@@ -499,6 +500,9 @@ echo " Приступаем к созданию логического объе�
 echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
+cryptsetup -y luksFormat --type luks2 /dev/$home
+cryptsetup open /dev/$home cryptlvm
+
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
@@ -525,8 +529,6 @@ read -n 1 -s -r -p "Press any key to continue"
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
   
-   cryptsetup -y luksFormat --type luks2 /dev/$home
-   cryptsetup open /dev/$home cryptlvm
 
 ###################  раздел  ###############################################################
  clear
