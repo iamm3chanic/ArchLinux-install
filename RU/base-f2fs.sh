@@ -206,7 +206,8 @@ echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
   cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvmpvcreate /dev/$home
+  cryptsetup open /dev/$home cryptlvm
+pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
 lvcreate -L $nor G -n root vg_arch
@@ -227,8 +228,6 @@ read -n 1 -s -r -p "Press any key to continue"
 ############ mount ################
  mkfs.f2fs /dev/vg_arch/root
  mkfs.f2fs /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
@@ -497,7 +496,8 @@ echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
    cryptsetup -y luksFormat --type luks2 /dev/$home
-   cryptsetup open /dev/$home cryptlvmpvcreate /dev/$home
+   cryptsetup open /dev/$home cryptlvm
+pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
 lvcreate -L $nor G -n root vg_arch

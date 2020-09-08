@@ -204,7 +204,9 @@ echo ""
 lsblk -f
 read -p "Point LVM part(ex. sda3, nvme0n1p3):" home
   cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvmpvcreate /dev/$home
+  cryptsetup open /dev/$home cryptlvm
+
+pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "How many GB giving to root?:" nor
 lvcreate -L $nor G -n root vg_arch

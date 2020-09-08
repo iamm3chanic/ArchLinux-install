@@ -211,7 +211,7 @@ cryptsetup open /dev/$home cryptlvm
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
+lvcreate -L $(nor)G -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "Вот вывод PVDISPLAY:"
@@ -506,7 +506,7 @@ cryptsetup open /dev/$home cryptlvm
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
+lvcreate -L $(nor)G -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "Вот вывод PVDISPLAY:"
