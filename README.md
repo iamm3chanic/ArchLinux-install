@@ -13,6 +13,8 @@ Then boot from this disk and connect to the Internet somehow:
 After successful connection, write:
 ```bash
  pacman -Sy
+ curl -OL https://git.io/JUCyO
+ #OR#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base
  chmod +x base
  ./base
@@ -21,7 +23,7 @@ After successful connection, write:
 In this script, in any version there are two folders - Russian and English.
 For your comfort: 
 - partition of disk in your way(version1 branch)
-- partition of disk in my way(version2 branch) //temporary improving...
+- partition of disk in my way(version2 branch)     //temporary improving bugs...
 - 7 DM's to choose (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( with or without DM ))
 - apps to download right after configuring system
 - folder with only raw commads, aka check-list
@@ -47,7 +49,7 @@ For your comfort:
 ```bash
  pacman -Sy
  curl -OL https://git.io/JUCyJ
- #OR#
+ #ИЛИ#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base
  ./base
