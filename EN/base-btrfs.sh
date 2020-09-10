@@ -205,12 +205,12 @@ echo " Starting to create a logical volume."
 echo ""
 lsblk -f
 read -p "Point LVM part(ex. sda3, nvme0n1p3):" home
-  cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvm
+ 
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "How many GB giving to root?:" nor
-lvcreate -L $nor G -n root vg_arch
+read -p "How many GB giving to root?:
+        ! Write a number and letter G, example: 15G !" nor
+lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "output of PVDISPLAY:"
@@ -235,7 +235,8 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
-  ######################################################вот тут может быть не то
+ cryptsetup -y luksFormat --type luks2 /dev/$home
+ cryptsetup open /dev/$home cryptlvm
  
 ###################  раздел  ###############################################################
  clear
@@ -494,13 +495,13 @@ echo " Starting to create a logical volume."
 echo ""
 lsblk -f
 read -p "Point LVM part (ex. sda3, nvme0n1p3):" home
- cryptsetup -y luksFormat --type luks2 /dev/$home
- cryptsetup open /dev/$home cryptlvm
+
 
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "How many GB giving to root?:" nor
-lvcreate -L $nor G -n root vg_arch
+read -p "How many GB giving to root?:
+        ! Write a number and letter G, example: 15G !" nor
+lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "output of PVDISPLAY:"
@@ -525,7 +526,8 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
- #
+ cryptsetup -y luksFormat --type luks2 /dev/$home
+ cryptsetup open /dev/$home cryptlvm
 
  
 ###################  раздел  ###############################################################
