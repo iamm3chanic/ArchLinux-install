@@ -18,24 +18,16 @@ After successful connection, write:
  chmod +x base
  ./base
 ```
-Probably it could fail to download other part of script to /mnt and change root, especially if iinstalling is processing on VirtualBox. So after the end of script "base", if see no file named "chroot", do this:
-```bash
- arch-chroot /mnt /bin/bash
- pacman -Syu 
- curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot
- chmod +x chroot
- ./chroot
-```
+
 In this script, in any version there are two folders - Russian and English.
 For your comfort: 
 - partition of disk in your way(version1 branch)
-- partition of disk in my way(version2 branch)
+- partition of disk in my way(version2 branch) //temporary improving...
 - 7 DM's to choose (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( with or without DM ))
 - apps to download right after configuring system
 - folder with only raw commads, aka check-list
 ### TODO
 + various cryptsetup
-+ f2fs, btrfs, xfs
 + no LVM version
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov
@@ -56,28 +48,22 @@ For your comfort:
 После успешного подключения, пишем:
 ```bash
  pacman -Sy
+ curl -OL https://git.io/JUCyJ
+ #OR#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base
  ./base
 ```
-Вероятно, не получится загрузить другую часть скрипта в /mnt и сменить root, особенно если установка производится на VirtualBox. Поэтому после окончания работы скрипта "base", если не видите файла с именем "chroot", сделайте это:
-```bash
- arch-chroot /mnt /bin/bash
- pacman -Syu 
- curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
- chmod +x chroot
- ./chroot
-```
+
 В этом скрипте в любой версии есть две папки - RU и EN.
 Для вашего удобства:
 - раздел диска по-вашему (version1)
-- раздел диска по-моему (version2)
+- раздел диска по-моему (version2) //временно на исправлении багов...
 - 7 DM на выбор (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( с или без DM ))
 - приложения для загрузки сразу после настройки системы
 - папка с чистыми командами, он же чек-лист
 ### TODO
 + various cryptsetup
-+ f2fs, btrfs, xfs
 + no LVM version
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
