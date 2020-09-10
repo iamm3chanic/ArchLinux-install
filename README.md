@@ -1,7 +1,6 @@
 # ArchLinux-install
 ## EN
 #### Read the script before using and edit if necessary. 
-#### Only ext4 filesystem. For f2f/btrfs, check dev branch! :)
 To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
@@ -35,7 +34,6 @@ For your comfort:
 
 ## RU
 #### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
-#### Только для файловой системы ext4. Для f2f, смотрите dev ветку! :)
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
