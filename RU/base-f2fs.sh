@@ -193,11 +193,23 @@ fi
 ############ swap   ####################################################
  clear
  lsblk -f
- 
+while 
+    read -n1 -p  "
+    1 - форматируем и монтируеи swap
+    
+    2 - пропустить если swap раздела нет : " swaps 
+    echo ''
+    [[ "$swaps" =~ [^12] ]]
+do
+    :
+done
+ if [[ $swaps == 1 ]]; then
   read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
   mkswap /dev/$swaps -L swap
   swapon /dev/$swaps
-  
+  elif [[ $swaps == 2 ]]; then
+ echo " идем дальше "
+fi
 ################  home     ############################################################ 
 clear
 echo ""
@@ -205,12 +217,12 @@ echo " Приступаем к созданию логического объе�
 echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
-  cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvm
+
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
+read -p "\nСколько гигaбайт отдаем под root?:
+         ! Напишите число и букву G, например 15G !" nor
+lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "Вот вывод PVDISPLAY:"
@@ -233,7 +245,8 @@ read -n 1 -s -r -p "Press any key to continue"
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
   
-
+  cryptsetup -y luksFormat --type luks2 /dev/$home
+  cryptsetup open /dev/$home cryptlvm
  clear
 echo 'Добавим разделы  Windows (ntfs/fat32)?'
 while 
@@ -481,13 +494,25 @@ done
 fi   
 
 ############ swap   ####################################################
- clear
+  clear
  lsblk -f
- 
+while 
+    read -n1 -p  "
+    1 - форматируем и монтируеи swap
+    
+    2 - пропустить если swap раздела нет : " swaps 
+    echo ''
+    [[ "$swaps" =~ [^12] ]]
+do
+    :
+done
+ if [[ $swaps == 1 ]]; then
   read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
   mkswap /dev/$swaps -L swap
   swapon /dev/$swaps
-  
+  elif [[ $swaps == 2 ]]; then
+ echo " идем дальше "
+fi
 ################  home     ############################################################ 
 clear
 echo ""
@@ -495,12 +520,12 @@ echo " Приступаем к созданию логического объе�
 echo ""
 lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
-   cryptsetup -y luksFormat --type luks2 /dev/$home
-   cryptsetup open /dev/$home cryptlvm
+
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
+read -p "\nСколько гигaбайт отдаем под root?:
+         ! Напишите число и букву G, например 15G !" nor
+lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
 echo "Вот вывод PVDISPLAY:"
@@ -523,7 +548,8 @@ read -n 1 -s -r -p "Press any key to continue"
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
   
-
+   cryptsetup -y luksFormat --type luks2 /dev/$home
+   cryptsetup open /dev/$home cryptlvm
 
 ###################  раздел  ###############################################################
  clear
