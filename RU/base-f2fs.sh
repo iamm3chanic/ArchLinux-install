@@ -113,7 +113,7 @@ if [[ $boots == 1 ]]; then
   clear
  lsblk -f
   echo ""
-read -p "Укажите boot раздел ( например sda2, nvme0n1p3 ):" bootd
+read -p "Укажите boot раздел ( например sda2, nvme0n1p2 ): " bootd
 mount /dev/$bootd /mnt
 cd /mnt
 ls | grep -v EFI | xargs rm -rfv
@@ -181,14 +181,14 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd
-  mkfs.fat -F32 /dev/$bootd
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootdd
+  mkfs.fat -F32 /dev/$bootdd
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 0 ]]; then
- read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd 
+ read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd 
  mkdir /mnt/boot
-mount /dev/$bootd /mnt/boot
+mount /dev/$bootdd /mnt/boot
 fi
 ############ swap   ####################################################
  clear
@@ -197,17 +197,17 @@ while
     read -n1 -p  "
     1 - форматируем и монтируеи swap
     
-    2 - пропустить если swap раздела нет : " swaps 
+    2 - пропустить если swap раздела нет : " swa
     echo ''
-    [[ "$swaps" =~ [^12] ]]
+    [[ "$swa" =~ [^12] ]]
 do
     :
 done
- if [[ $swaps == 1 ]]; then
-  read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
+ if [[ $swa == 1 ]]; then
+  read -p "Укажите swap раздел(например sda2, nvme0n1p2): " swaps
   mkswap /dev/$swaps -L swap
   swapon /dev/$swaps
-  elif [[ $swaps == 2 ]]; then
+  elif [[ $swa == 2 ]]; then
  echo " идем дальше "
 fi
 ################  home     ############################################################ 
@@ -220,8 +220,8 @@ read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" 
 
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "\nСколько гигaбайт отдаем под root?:
-         ! Напишите число и букву G, например 15G !" nor
+read -p "\n Сколько гигaбайт отдаем под root?:
+ ! Напишите число и букву G, например 15G !" nor
 lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
@@ -410,7 +410,7 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -a
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
@@ -418,7 +418,7 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -a
+umount -R /mnt
 reboot  
 
 fi
@@ -462,12 +462,6 @@ fi
  clear
  lsblk -f
   echo ""
-#read -p "Укажите ROOT раздел( например,):" root
-#echo ""
-#mkfs.ext4 /dev/$root -L root
-#mount /dev/$root /mnt    
-#UUUUUUUUUUUUUUUUUUUUUUUUUU
-
 ##############################
 ########## boot  ########
 echo ' добавим и отформатируем BOOT?'
@@ -485,10 +479,10 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd
-  mkfs.ext2  /dev/$bootd -L boot
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
+  mkfs.ext2  /dev/$bootdd -L boot
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 2 ]]; then
  echo " идем дальше "
 fi   
@@ -500,17 +494,17 @@ while
     read -n1 -p  "
     1 - форматируем и монтируеи swap
     
-    2 - пропустить если swap раздела нет : " swaps 
+    2 - пропустить если swap раздела нет : " swa
     echo ''
-    [[ "$swaps" =~ [^12] ]]
+    [[ "$swa" =~ [^12] ]]
 do
     :
 done
- if [[ $swaps == 1 ]]; then
-  read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
+ if [[ $swa == 1 ]]; then
+  read -p "Укажите swap раздел(например sda2, nvme0n1p2): " swaps
   mkswap /dev/$swaps -L swap
   swapon /dev/$swaps
-  elif [[ $swaps == 2 ]]; then
+  elif [[ $swa == 2 ]]; then
  echo " идем дальше "
 fi
 ################  home     ############################################################ 
@@ -523,8 +517,8 @@ read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" 
 
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
-read -p "\nСколько гигaбайт отдаем под root?:
-         ! Напишите число и букву G, например 15G !" nor
+read -p "\n Сколько гигaбайт отдаем под root?:
+ ! Напишите число и букву G, например 15G !" nor
 lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
@@ -679,11 +673,11 @@ done
  if [[ $x_pacstrap == 1 ]]; then
   clear
   pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget networkmanager network-manager-applet mkinitcpio git grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
-  genfstab -pU /mnt >> /mnt/etc/fstab
+  genfstab -p -U /mnt >> /mnt/etc/fstab
 elif [[ $x_pacstrap == 2 ]]; then
   clear
  pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget nano vi linux-firmware efibootmgr grub mkinitcpio git
-  genfstab -pU /mnt >> /mnt/etc/fstab
+  genfstab -p -U /mnt >> /mnt/etc/fstab
 fi 
  clear
 ###############################
@@ -713,7 +707,7 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -a
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
@@ -721,7 +715,7 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -a
+umount -R /mnt
 reboot  
 fi
 

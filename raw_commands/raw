@@ -55,8 +55,7 @@ pacstrap /mnt base base-devel linux linux-headers dhcpcd  which inetutils netctl
 
 genfstab -p -U /mnt >> /mnt/etc/fstab
  
-umount -a
-reboot    
+ 
 ##################################################################
 ################# chroot #########################################
 ##################################################################
@@ -238,4 +237,7 @@ pacman -S firefox firefox-i18n-ru --noconfirm
   mkdir /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}   
   chown -R $username:users  /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}
 
+exit 
+umount -a
+reboot  
  

@@ -181,14 +181,14 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootd
-  mkfs.fat -F32 /dev/$bootd
+  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootdd
+  mkfs.fat -F32 /dev/$bootdd
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 0 ]]; then
-  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootd 
+  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootdd
  mkdir /mnt/boot
-mount /dev/$bootd /mnt/boot
+mount /dev/$bootdd /mnt/boot
 fi
 ############ swap   ####################################################
  clear
@@ -209,7 +209,7 @@ read -p "Point LVM part(ex. sda3, nvme0n1p3):" home
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "How many GB giving to root?:
-        ! Write a number and letter G, example: 15G !" nor
+ ! Write a number and letter G, example: 15G !" nor
 lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
@@ -229,8 +229,6 @@ read -n 1 -s -r -p "Press any key to continue"
 # mkfs.ext2 /dev/sda1 #did above
  mkfs.btrfs /dev/vg_arch/root
  mkfs.btrfs /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
@@ -401,14 +399,14 @@ if [[ $int == 1 ]]; then
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot  
 
 fi
@@ -472,10 +470,10 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootd
-  mkfs.ext2  /dev/$bootd -L boot
+  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootdd
+  mkfs.ext2  /dev/$bootdd -L boot
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 2 ]]; then
  echo " skipped "
 fi   
@@ -520,9 +518,7 @@ read -n 1 -s -r -p "Press any key to continue"
 # mkfs.ext2 /dev/sda1 #did above
  mkfs.btrfs /dev/vg_arch/root
  mkfs.btrfs /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
-
+ 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
@@ -694,14 +690,14 @@ if [[ $int == 1 ]]; then
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot  
 fi
 

@@ -184,9 +184,9 @@ done
   mkdir /mnt/boot
   mount /dev/$bootd /mnt/boot
   elif [[ $boots == 0 ]]; then
-  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootd 
+  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootdd
  mkdir /mnt/boot
-mount /dev/$bootd /mnt/boot
+mount /dev/$bootdd /mnt/boot
 fi
 ############ swap   ####################################################
  clear
@@ -471,10 +471,10 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootd
-  mkfs.ext2  /dev/$bootd -L boot
+  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootdd
+  mkfs.ext2  /dev/$bootdd -L boot
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 2 ]]; then
  echo " skipped "
 fi   
@@ -498,7 +498,7 @@ read -p "Point LVM part (ex. sda3, nvme0n1p3):" home
 pvcreate /dev/$home
 vgcreate vg_arch /dev/$home
 read -p "How many GB giving to root?:
-        ! Write a number and letter G, example: 15G !" nor
+ ! Write a number and letter G, example: 15G !" nor
 lvcreate -L $nor -n root vg_arch
 lvcreate -l 100%FREE -n home vg_arch
 clear
@@ -517,8 +517,6 @@ read -n 1 -s -r -p "Press any key to continue"
 ############ mount ################
  mkfs.f2fs /dev/vg_arch/root
  mkfs.f2fs /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
