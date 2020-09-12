@@ -3,7 +3,7 @@
 echo 'Скрипт второй: настройка системы в chroot '
 timedatectl set-ntp true
 pacman -Syyu  --noconfirm
-pacman -S lvm2
+pacman -S lvm2 --noconfirm
 echo ""
 read -p "Введите имя компьютера: " hostname
 echo ""
@@ -340,8 +340,8 @@ fi
 echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
 	Не забудьте проверить наличие хука udev или btrfs, если используете btrfs!
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
-read -n 1 -s -r -p "\nФайл откроется в nano! \nНажмите любую клавишу для открытия:"
+	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\"\n"
+read -n 1 -s -r -p "Файл откроется в nano! \n Нажмите любую клавишу для открытия:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
 ##########
@@ -1760,14 +1760,14 @@ do
 done
 if [[ $vm_text == 0 ]]; then
   echo 'этап пропущен'  
- exit
+
 elif [[ $vm_text == 1 ]]; then
   mkdir /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}   
   chown -R $username:users  /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}
-exit
+
 fi  
 clear 
-echo " Установка завершена для выхода введите >> exit << "
+echo " Установка завершена, для выхода введите >> exit << "
 exit
-exit
+
 

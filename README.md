@@ -13,7 +13,7 @@ Then boot from this disk and connect to the Internet somehow:
 After successful connection, write:
 ```bash
  pacman -Sy
- curl -OL https://git.io/JUCyO
+ curl -Lo base  https://git.io/JUCyO
  #OR#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base
  chmod +x base
@@ -48,7 +48,7 @@ For your comfort:
 После успешного подключения, пишем:
 ```bash
  pacman -Sy
- curl -OL https://git.io/JUCyJ
+ curl -Lo base https://git.io/JUCyJ
  #ИЛИ#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base

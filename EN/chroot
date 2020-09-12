@@ -3,7 +3,7 @@
 echo 'Script two: configuring the system in chroot'
 timedatectl set-ntp true
 pacman -Syyu  --noconfirm
-pacman -S lvm2
+pacman -S lvm2 --noconfirm
 echo ""
 read -p "Enter hostname " hostname
 echo ""
@@ -224,9 +224,9 @@ clear
 echo " Editing /etc/mkinitcpio.conf , in HOOKS add lvm2 — right before filesystems:
        Don't forget to check for a \'udev\' or \'btrfs\' hook if you are using btrfs!
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
+	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\"\n"
 
-read -n 1 -s -r -p "\nFile will be open in nano! \nPress any key to open:"
+read -n 1 -s -r -p "File will be open in nano! \n Press any key to open:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
 ##########
@@ -1642,17 +1642,15 @@ do
 done
 if [[ $vm_text == 0 ]]; then
   echo 'skipped'  
- exit
+
 elif [[ $vm_text == 1 ]]; then
   mkdir /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}   
   chown -R $username:users  /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}
-exit
+
 fi  
 clear 
 echo " Installation finished, write >> exit << "
 echo " THANKS FOR USING MY SCRIPT!"
 
 exit
-exit
-
 
