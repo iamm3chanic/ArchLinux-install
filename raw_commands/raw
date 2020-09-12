@@ -23,8 +23,6 @@ cfdisk
   swapon /dev/sda2
   
 ################ lvm ########################################## 
-  cryptsetup -y luksFormat --type luks2 /dev/sda3
-  cryptsetup open /dev/sda3 cryptlvm
 
 pvcreate /dev/sda3
 vgcreate vg_arch /dev/sda3
@@ -45,7 +43,8 @@ lvdisplay
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
 
-
+  cryptsetup -y luksFormat --type luks2 /dev/sda3
+  cryptsetup open /dev/sda3 cryptlvm
 ########################################## смена зеркал  
 
 pacman -S reflector --noconfirm
