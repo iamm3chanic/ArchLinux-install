@@ -41,7 +41,10 @@ do
 done
 if [[ $x_key == 1 ]]; then
   clear
-  pacman-key --refresh-keys 
+  pacman-key --init 
+  pacman-key --populate
+  pacman-key --refresh-keys --keyserver keys.gnupg.net 
+  pacman -Syy
   elif [[ $x_key == 0 ]]; then
    echo " Обновление ключей пропущено "   
 fi
