@@ -148,7 +148,7 @@ done
    clear
  lsblk -f
   echo "Сейчас будет провдиться разметка диска."
-  echo "Создайте 3 раздела: sda1 с флагом boot тип linux 83;"
+  echo "Создайте 3 раздела: sda1 тип EFI system"
   echo "                    sda2 тип linux 82 solaris"
   echo "                    sda3 тип linux 83"
   echo "       будьте внимательны, на sda3 потом появятся"
@@ -167,31 +167,6 @@ fi
   lsblk -f
   echo ""
  
-########## boot  ########
- clear
- lsblk -f
-  echo ""
-echo 'форматируем BOOT?'
-while 
-    read -n1 -p  "
-    1 - да
-    
-    0 - нет: " bootse # sends right after the keypress
-    echo ''
-    [[ "$bootse" =~ [^10] ]]
-do
-    :
-done
- if [[ $bootse == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
-  mkfs.fat -F32 /dev/$bootdd
-  mkdir /mnt/boot
-  mount /dev/$bootdd /mnt/boot
-  elif [[ $bootse == 0 ]]; then
- read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
- mkdir /mnt/boot
- mount /dev/$bootdd /mnt/boot
-fi
 ############ swap   ####################################################
  clear
  lsblk -f
@@ -244,12 +219,37 @@ read -n 1 -s -r -p "Press any key to continue"
 # mkfs.ext2 /dev/sda1 #did above
  mkfs.btrfs /dev/vg_arch/root
  mkfs.btrfs /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+
+########## boot  ########
+ clear
+ lsblk -f
+  echo ""
+echo 'форматируем BOOT?'
+while 
+    read -n1 -p  "
+    1 - да
+    
+    0 - нет: " bootse # sends right after the keypress
+    echo ''
+    [[ "$bootse" =~ [^10] ]]
+do
+    :
+done
+ if [[ $bootse == 1 ]]; then
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
+  mkfs.fat -F32 /dev/$bootdd
+  mkdir /mnt/boot
+  mount /dev/$bootdd /mnt/boot
+  elif [[ $bootse == 0 ]]; then
+ read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
+ mkdir /mnt/boot
+ mount /dev/$bootdd /mnt/boot
+fi
+
   cryptsetup -y luksFormat --type luks2 /dev/$home
   cryptsetup open /dev/$home cryptlvm  
 
@@ -469,36 +469,7 @@ fi
  clear
  lsblk -f
   echo ""
-#read -p "Укажите ROOT раздел( например,):" root
-#echo ""
-#mkfs.ext4 /dev/$root -L root
-#mount /dev/$root /mnt    
-#UUUUUUUUUUUUUUUUUUUUUUUUUU
-
-##############################
-########## boot  ########
-echo ' добавим и отформатируем BOOT?'
-echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "
-echo " тогда вам необходимо его форматировать "1", если у вас бут раздел не вынесен на другой раздел тогда "
-echo " этот этап можно пропустить "2" "
-while 
-    read -n1 -p  "
-    1 - форматировать и монтировать на отдельный раздел
-    
-    2 - пропустить если бут раздела нет : " bootse 
-    echo ''
-    [[ "$bootse" =~ [^12] ]]
-do
-    :
-done
- if [[ $bootse == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
-  mkfs.ext2  /dev/$bootd -L boot
-  mkdir /mnt/boot
-  mount /dev/$bootdd /mnt/boot
-  elif [[ $bootse == 2 ]]; then
- echo " идем дальше "
-fi   
+  
 
 ############ swap   ####################################################
  clear
@@ -555,6 +526,31 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+############################
+########## boot  ########
+echo ' добавим и отформатируем BOOT?'
+echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "
+echo " тогда вам необходимо его форматировать "1", если у вас бут раздел не вынесен на другой раздел тогда "
+echo " этот этап можно пропустить "2" "
+while 
+    read -n1 -p  "
+    1 - форматировать и монтировать на отдельный раздел
+    
+    2 - пропустить если бут раздела нет : " bootse 
+    echo ''
+    [[ "$bootse" =~ [^12] ]]
+do
+    :
+done
+ if [[ $bootse == 1 ]]; then
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
+  mkfs.ext2  /dev/$bootd -L boot
+  mkdir /mnt/boot
+  mount /dev/$bootdd /mnt/boot
+  elif [[ $bootse == 2 ]]; then
+ echo " идем дальше "
+fi   
+
     cryptsetup -y luksFormat --type luks2 /dev/$home
     cryptsetup open /dev/$home cryptlvm 
 ###################  раздел  ###############################################################

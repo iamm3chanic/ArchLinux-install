@@ -235,6 +235,6 @@ pacman -S firefox firefox-i18n-ru --noconfirm
   chown -R $username:users  /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}
 
 exit 
-umount -a
+umount -R /mnt
 reboot  
  

@@ -146,7 +146,7 @@ done
    clear
  lsblk -f
   echo "Сейчас будет провдиться разметка диска."
-  echo "Создайте 3 раздела: sda1 с флагом boot тип linux 83;"
+  echo "Создайте 3 раздела: sda1 тип EFI system"
   echo "                    sda2 тип linux 82 solaris"
   echo "                    sda3 тип linux 83"
   echo "       будьте внимательны, на sda3 потом появятся"
@@ -521,7 +521,7 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
-##############################
+########################
 ########## boot  ########
 echo ' добавим и отформатируем BOOT?'
 echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "

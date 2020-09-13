@@ -1,4 +1,4 @@
-#!/bib/bash
+#!/bin/bash
 echo " Ready to start?  "
 while 
     read -n1 -p  "
@@ -144,7 +144,7 @@ done
    clear
  lsblk -f
   echo "The disk will now be marked up."
-  echo " Create 3 sections: sda1 , flag boot type linux 83"
+  echo " Create 3 sections: sda1 , type EFI system"
   echo "                    sda2 , type linux 82 solaris"
   echo "                    sda3 , type linux 83"
   echo "       be accurate, on sda3 there will be"
@@ -163,31 +163,6 @@ fi
   lsblk -f
   echo ""
  
-########## boot  ########
- clear
- lsblk -f
-  echo ""
-echo 'format BOOT?'
-while 
-    read -n1 -p  "
-    1 - yes
-    
-    0 - no: " boots # sends right after the keypress
-    echo ''
-    [[ "$boots" =~ [^10] ]]
-do
-    :
-done
- if [[ $boots == 1 ]]; then
-  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootd
-  mkfs.fat -F32 /dev/$bootd
-  mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
-  elif [[ $boots == 0 ]]; then
-  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootdd
- mkdir /mnt/boot
-mount /dev/$bootdd /mnt/boot
-fi
 ############ swap   ####################################################
  clear
  lsblk -f
@@ -223,13 +198,37 @@ lvdisplay
 read -n 1 -s -r -p "Press any key to continue"
 
 ############ mount ################
-# mkfs.ext2 /dev/sda1 #did above
  mkfs.f2fs /dev/vg_arch/root
  mkfs.f2fs /dev/vg_arch/home
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+########## boot  ########
+ clear
+ lsblk -f
+  echo ""
+echo 'format BOOT?'
+while 
+    read -n1 -p  "
+    1 - yes
+    
+    0 - no: " boots # sends right after the keypress
+    echo ''
+    [[ "$boots" =~ [^10] ]]
+do
+    :
+done
+ if [[ $boots == 1 ]]; then
+  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootd
+  mkfs.fat -F32 /dev/$bootd
+  mkdir /mnt/boot
+  mount /dev/$bootd /mnt/boot
+  elif [[ $boots == 0 ]]; then
+  read -p "Point BOOT part(ex. sda1, nvme0n1p1):" bootdd
+ mkdir /mnt/boot
+mount /dev/$bootdd /mnt/boot
+fi
 
   cryptsetup -y luksFormat --type luks2 /dev/$home
   cryptsetup open /dev/$home cryptlvm
@@ -448,36 +447,6 @@ fi
  clear
  lsblk -f
   echo ""
-#read -p "Укажите ROOT раздел( например,):" root
-#echo ""
-#mkfs.ext4 /dev/$root -L root
-#mount /dev/$root /mnt    
-#UUUUUUUUUUUUUUUUUUUUUUUUUU
-
-##############################
-########## boot  ########
-echo ' add and format BOOT?'
-echo " If you are installing and you already have a boot partition from the previous system "
-echo " then you need to format it "1", if you have a boot partition not moved to another partition then "
-echo " this stage can be skipped "2" "
-while 
-    read -n1 -p  "
-    1-format and mount on a separate partition
-
-    2-skip if there is no boot section : " boots 
-    echo ''
-    [[ "$boots" =~ [^12] ]]
-do
-    :
-done
- if [[ $boots == 1 ]]; then
-  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootdd
-  mkfs.ext2  /dev/$bootdd -L boot
-  mkdir /mnt/boot
-  mount /dev/$bootdd /mnt/boot
-  elif [[ $boots == 2 ]]; then
- echo " skipped "
-fi   
 
 ############ swap   ####################################################
  clear
@@ -521,6 +490,31 @@ read -n 1 -s -r -p "Press any key to continue"
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
   mount /dev/vg_arch/home /mnt/home/
+#########################
+########## boot  ########
+echo ' add and format BOOT?'
+echo " If you are installing and you already have a boot partition from the previous system "
+echo " then you need to format it "1", if you have a boot partition not moved to another partition then "
+echo " this stage can be skipped "2" "
+while 
+    read -n1 -p  "
+    1-format and mount on a separate partition
+
+    2-skip if there is no boot section : " boots 
+    echo ''
+    [[ "$boots" =~ [^12] ]]
+do
+    :
+done
+ if [[ $boots == 1 ]]; then
+  read -p "Point BOOT part (ex. sda1, nvme0n1p1):" bootdd
+  mkfs.ext2  /dev/$bootdd -L boot
+  mkdir /mnt/boot
+  mount /dev/$bootdd /mnt/boot
+  elif [[ $boots == 2 ]]; then
+ echo " skipped "
+fi   
+
  cryptsetup -y luksFormat --type luks2 /dev/$home
  cryptsetup open /dev/$home cryptlvm
 
@@ -634,7 +628,7 @@ clear
    echo 'skippedchanging mirrors'   
 fi
 pacman -Sy --noconfirm
- ################################################################################### 
+################################################################################## 
 clear
 echo ""
 echo "If you used wi-Fi (wifi-menu) to connect to the Internet, then "1" "
@@ -689,14 +683,14 @@ if [[ $int == 1 ]]; then
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+umount -R /mnt
 reboot  
 fi
 
