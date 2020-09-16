@@ -31,7 +31,11 @@
 - папка с чистыми командами, он же чек-лист
 ### TODO
 + various cryptsetup
-+ no LVM version
++ версия без LVM
+### Полезные ссылки
+- [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
+- [Статья на хабре](https://habr.com/ru/post/420081/)
+- [Моя статья](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
 - Тестировщик, бро: github.com/frutitutitut | github.com/dd1xt5r
@@ -69,6 +73,10 @@ For your comfort:
 ### TODO
 + various cryptsetup
 + no LVM version
+### Useful links
+- [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
+- [Habr article](https://habr.com/ru/post/420081/)
+- [My article](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov
 - Tester&Bro: github.com/frutitutitut | github.com/dd1xt5r
