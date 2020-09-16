@@ -343,7 +343,7 @@ do
 done
    if [[ $zerkala == 1 ]]; then
 pacman -S reflector --noconfirm
-reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 clear
   elif [[ $zerkala == 0 ]]; then
@@ -627,7 +627,7 @@ do
 done
    if [[ $zerkala == 1 ]]; then
 pacman -S reflector --noconfirm
-reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 clear
   elif [[ $zerkala == 0 ]]; then
