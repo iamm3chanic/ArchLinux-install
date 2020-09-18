@@ -316,6 +316,7 @@ do
 done
 if [[ $i_grub == 2 ]]; then
 pacman -S grub   --noconfirm
+clear
 lsblk -f
 read -p "Укажите диск куда установить GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -323,6 +324,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo " установка завершена "
 elif [[ $i_grub == 1 ]]; then
 pacman -S grub grub-customizer os-prober  --noconfirm
+clear
 lsblk -f
 read -p "Укажите диск куда установить GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -725,7 +727,7 @@ while
     
     2 - xfce 
     
-    3 - gmome
+    3 - gnome
     
     4 - lxde
     
@@ -1171,7 +1173,7 @@ echo " Установка завершена "
 fi
 echo "#############################################################################"
 echo ""
-echo " vlc - проигрыватель мультимедиа ) "
+echo " vlc - проигрыватель мультимедиа "
 while 
     read -n1 -p  "
     1 - да 
@@ -1294,7 +1296,7 @@ do
     :
 done
 if [[ $g_chrome == 0 ]]; then
-  echo ' установка браузера пропущена после установки системы вы сможете установить браузер на свой усмотрение!!!!' 
+  echo ' установка браузера пропущена. После установки системы вы сможете установить браузер на свой усмотрение!' 
 elif [[ $g_chrome == 1 ]]; then
 cd /home/$username   
 git clone https://aur.archlinux.org/google-chrome.git

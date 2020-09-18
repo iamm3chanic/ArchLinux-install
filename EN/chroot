@@ -200,6 +200,7 @@ do
 done
 if [[ $i_grub == 2 ]]; then
 pacman -S grub   --noconfirm
+clear
 lsblk -f
 read -p "Point the disk where to install GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -207,6 +208,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo " installation finished "
 elif [[ $i_grub == 1 ]]; then
 pacman -S grub grub-customizer os-prober  --noconfirm
+clear
 lsblk -f
 read -p "Point the disk where to install GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot

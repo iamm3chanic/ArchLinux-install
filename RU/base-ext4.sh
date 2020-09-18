@@ -508,7 +508,7 @@ pvcreate /dev/mapper/cryptlvm
 vgcreate vg_arch /dev/mapper/cryptlvm
 clear
 ls -l /dev/mapper/cryptlvm
-
+echo ""
 read -p " Сколько гигaбайт отдаем под root?:
  ! Напишите число и букву G, например 15G !" nor
 lvcreate -L $nor -n root vg_arch
@@ -527,15 +527,16 @@ lvdisplay
 read -n 1 -s -r -p "Press any key to continue"
 
 ############ mount ################
- mkfs.ext4 /dev/vg_arch/root
- mkfs.ext4 /dev/vg_arch/home
+ mkfs.ext4 -L root /dev/vg_arch-root
+ mkfs.ext4 -L home /dev/vg_arch-home
 
-  mount /dev/vg_arch/root /mnt/
+  mount /dev/vg_arch-root /mnt
   mkdir /mnt/home
-  mount /dev/vg_arch/home /mnt/home/
+  mount /dev/vg_arch-home /mnt/home
 ########################
 ########## boot  ########
-echo ' добавим и отформатируем BOOT?'
+clear
+echo ' Добавим и отформатируем BOOT?'
 echo " Если производится установка, и у вас уже имеется бут раздел от предыдущей системы "
 echo " тогда вам необходимо его форматировать (1), если у вас бут раздел не вынесен на другой раздел тогда "
 echo " этот этап можно пропустить (2) "
