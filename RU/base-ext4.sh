@@ -527,12 +527,12 @@ lvdisplay
 read -n 1 -s -r -p "Press any key to continue"
 
 ############ mount ################
- mkfs.ext4 -L root /dev/vg_arch-root
- mkfs.ext4 -L home /dev/vg_arch-home
+ mkfs.ext4 -L root /dev/mapper/vg_arch-root
+ mkfs.ext4 -L home /dev/mapper/vg_arch-home
 
-  mount /dev/vg_arch-root /mnt
-  mkdir /mnt/home
-  mount /dev/vg_arch-home /mnt/home
+  mount /dev/mapper/vg_arch-root /mnt
+  mkdir -p /mnt/home
+  mount /dev/mapper/vg_arch-home /mnt/home
 ########################
 ########## boot  ########
 clear
@@ -553,7 +553,7 @@ done
  if [[ $boots == 1 ]]; then
   read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
   mkfs.ext2  /dev/$bootdd -L boot
-  mkdir /mnt/boot
+  mkdir -p /mnt/boot
   mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 2 ]]; then
  echo " идем дальше "
