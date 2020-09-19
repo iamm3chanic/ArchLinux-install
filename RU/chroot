@@ -344,11 +344,10 @@ echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавля�
  Не забудьте проверить наличие хука udev или btrfs, если используете btrfs!
  Для LEGACY:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block encrypt lvm2 filesystems keyboard
- fsck\"\n
+	HOOKS=\"base udev autodetect modconf block encrypt lvm2 filesystems keyboard keymap fsck\"\n
  Для UEFI-systemd:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck\"\n"
+	HOOKS=\"base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck\"\n"
 read -n 1 -s -r -p "Файл откроется в nano! \n Нажмите любую клавишу для открытия:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux

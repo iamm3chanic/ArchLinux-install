@@ -511,8 +511,8 @@ ls -l /dev/mapper/cryptlvm
 echo ""
 read -p " Сколько гигaбайт отдаем под root?:
  ! Напишите число и букву G, например 15G !" nor
-lvcreate -L $nor -n root vg_arch
-lvcreate -l 100%FREE -n home vg_arch
+lvcreate -L $nor vg_arch -n root 
+lvcreate -l 100%FREE vg_arch -n home
 clear
 echo "Вот вывод PVDISPLAY:"
 pvdisplay
@@ -527,12 +527,12 @@ lvdisplay
 read -n 1 -s -r -p "Press any key to continue"
 
 ############ mount ################
- mkfs.ext4 -L root /dev/mapper/vg_arch-root
- mkfs.ext4 -L home /dev/mapper/vg_arch-home
+ mkfs.ext4 -L root /dev/vg_arch/root
+ mkfs.ext4 -L home /dev/vg_arch/home
 
-  mount /dev/mapper/vg_arch-root /mnt
+  mount dev/vg_arch/root /mnt
   mkdir -p /mnt/home
-  mount /dev/mapper/vg_arch-home /mnt/home
+  mount /dev/vg_arch/home /mnt/home
 ########################
 ########## boot  ########
 clear
