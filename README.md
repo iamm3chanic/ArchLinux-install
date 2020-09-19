@@ -22,14 +22,17 @@
 
 В этом скрипте в любой версии есть две папки - RU и EN.
 Для вашего удобства:
-- раздел диска по-вашему в cfdisk (master, version1)
+- раздел диска по-вашему в cfdisk (master, version1, version3)
 - раздел диска по-моему (version2) //временно на исправлении багов...
+- шифрование ПОСЛЕ создания логического объёма и монтирования (version3)
+- шифрование ПЕРЕД созданием логического объёма и монтированием (dev)
 - поддержка UEFI и Legacy
 - шифрованный LVM
 - 7 DM на выбор (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( с или без DM ))
 - приложения для загрузки сразу после настройки системы
 - папка с чистыми командами, он же чек-лист
 ### TODO
++ создание шифрованного контейнера перед созданием логического объёма
 + various cryptsetup
 + версия без LVM
 ### Полезные ссылки
@@ -38,7 +41,7 @@
 - [Моя статья](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Благодарность:
 - Помощник, основа: github.com/poruncov
-- Тестировщик, бро: github.com/frutitutitut | github.com/dd1xt5r
+- Тестировщик, бро: github.com/frutitutitut (github.com/dd1xt5r)
 
 ## EN
 #### Read the script before using and edit if necessary. 
@@ -63,14 +66,17 @@ After successful connection, write:
 
 In this script, in any version there are two folders - Russian and English.
 For your comfort: 
-- partition of disk in your way in cfdisk (master, version1 branch)
+- partition of disk in your way in cfdisk (master, version1, version3 branch)
 - partition of disk in my way(version2 branch)     //temporary improving bugs...
+- encryption AFTER logical volume creation and mounting (version 3)
+- encryption BEFORE creating a logical volume and mounting (dev)
 - UEFI and Legacy support
 - encrypted LVM
 - 7 DM's to choose (Plasma,Xfce,Gnome 3,Lxde,Deepin,Mate,Lxqt,i3 ( with or without DM ))
 - apps to download right after configuring system
 - folder with only raw commads, aka check-list
 ### TODO
++ creating an encrypted container before creating a logical volume
 + various cryptsetup
 + no LVM version
 ### Useful links
@@ -78,6 +84,6 @@ For your comfort:
 - [Habr article](https://habr.com/ru/post/420081/)
 - [My article](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Thanks a lot:
-- Helper&Base: github.com/poruncov
-- Tester&Bro: github.com/frutitutitut | github.com/dd1xt5r
+- Helper&Base: github.com/poruncov 
+- Tester&Bro: github.com/frutitutitut (github.com/dd1xt5r)
 
