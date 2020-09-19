@@ -41,17 +41,17 @@ do
 done
 if [[ $x_key == 1 ]]; then
   clear
-  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/EN/base-ext4.sh
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base-ext4.sh
   chmod +x base-ext4.sh
   ./base-ext4.sh
   elif [[ $x_key == 2 ]]; then
    clear
-  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/EN/base-f2fs.sh 
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base-f2fs.sh 
   chmod +x base-f2fs.sh
   ./base-f2fs.sh
   elif [[ $x_key == 3 ]]; then
    clear
-  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/EN/base-btrfs.sh 
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/EN/base-btrfs.sh 
   chmod +x base-btrfs.sh
   ./base-btrfs.sh
 fi
