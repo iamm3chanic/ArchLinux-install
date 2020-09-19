@@ -339,10 +339,16 @@ fi
 #############################################################
 #########################################################
 ##########################прописать хук
-echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
-	Не забудьте проверить наличие хука udev или btrfs, если используете btrfs!
+clear
+echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем encrypt и lvm2 — перед filesystems.
+ Не забудьте проверить наличие хука udev или btrfs, если используете btrfs!
+ Для LEGACY:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\"\n"
+	HOOKS=\"base udev autodetect modconf block encrypt lvm2 filesystems keyboard
+ fsck\"\n
+ Для UEFI-systemd:
+	#    usr, fsck and shutdown hooks.
+	HOOKS=\"base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck\"\n"
 read -n 1 -s -r -p "Файл откроется в nano! \n Нажмите любую клавишу для открытия:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
