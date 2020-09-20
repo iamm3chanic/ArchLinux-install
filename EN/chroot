@@ -223,12 +223,16 @@ fi
 clear
 #########################################################
 ##########################прописать хук
-echo " Editing /etc/mkinitcpio.conf , in HOOKS add lvm2 — right before filesystems:
+echo " Editing /etc/mkinitcpio.conf , in HOOKS add encrypt and lvm2 — right before filesystems:
        Don't forget to check for a \'udev\' or \'btrfs\' hook if you are using btrfs!
+ For LEGACY:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\"\n"
-
-read -n 1 -s -r -p "File will be open in nano! \n Press any key to open:"
+	HOOKS=\"base udev autodetect keyboard keymap modconf block encrypt lvm2 filesystems fsck\"\n
+ For UEFI-systemd:
+	#    usr, fsck and shutdown hooks.
+	HOOKS=\"base systemd autodetect keyboard keymap sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck\"
+	"
+read -n 1 -s -r -p "File will be open in nano!  Press any key to open:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
 ##########

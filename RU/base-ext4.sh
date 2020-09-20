@@ -530,7 +530,7 @@ read -n 1 -s -r -p "Press any key to continue"
  mkfs.ext4 -L root /dev/vg_arch/root
  mkfs.ext4 -L home /dev/vg_arch/home
 
-  mount dev/vg_arch/root /mnt
+  mount /dev/vg_arch/root /mnt
   mkdir -p /mnt/home
   mount /dev/vg_arch/home /mnt/home
 ########################
