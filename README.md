@@ -37,6 +37,7 @@
 + версия без LVM
 ### Полезные ссылки
 - [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
+- [Статья Alex Creio](https://creio.github.io/arch-lvm-luks/)
 - [Статья на хабре](https://habr.com/ru/post/420081/)
 - [Моя статья](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Благодарность:
@@ -81,6 +82,7 @@ For your comfort:
 + no LVM version
 ### Useful links
 - [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
+- [Alex Creio article](https://creio.github.io/arch-lvm-luks/)
 - [Habr article](https://habr.com/ru/post/420081/)
 - [My article](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Thanks a lot:
