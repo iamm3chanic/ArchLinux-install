@@ -721,7 +721,19 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -R /mnt
+umount -Rf /mnt
+vgchange -a n vg_arch
+cryptsetup close cryptlvm
+echo 'Создаем бэкап заголовка' 
+cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file luksheader.bac
+echo 'Шифруем' 
+openssl enc -aes-256-cbc -salt -in luksheader.bac -out luksheader.bac.enc
+rm luksheader.bac
+echo 'Расшифровываем'
+openssl enc -d -aes-256-cbc -in luksheader.bac.enc -out luksheader.bac
+echo 'Восстанавливаем, подтверждаем: YES большими буквами'
+cryptsetup luksHeaderRestore --header-backup-file luksheader.bac /dev/sda1
+read -n 1 -s -r -p "Нажмите любую клавишу для перезагрузки или ctrl+c для прерывания скрипта"
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
@@ -729,7 +741,19 @@ echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
 read -n 1 -s -r -p "Press any key to continue"
-umount -R /mnt
+umount -Rf /mnt
+vgchange -a n vg_arch
+cryptsetup close cryptlvm
+echo 'Создаем бэкап заголовка' 
+cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file luksheader.bac
+echo 'Шифруем' 
+openssl enc -aes-256-cbc -salt -in luksheader.bac -out luksheader.bac.enc
+rm luksheader.bac
+echo 'Расшифровываем'
+openssl enc -d -aes-256-cbc -in luksheader.bac.enc -out luksheader.bac
+echo 'Восстанавливаем, подтверждаем: YES большими буквами'
+cryptsetup luksHeaderRestore --header-backup-file luksheader.bac /dev/sda1
+read -n 1 -s -r -p "Нажмите любую клавишу для перезагрузки или ctrl+c для прерывания скрипта"
 reboot  
 fi
 
