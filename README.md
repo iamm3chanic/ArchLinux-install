@@ -13,7 +13,7 @@
 После успешного подключения, пишем:
 ```bash
  pacman -Sy
- curl -Lo base https://git.io/JUCyJ
+ curl -Lo base https://git.io/JUEAD
  #ИЛИ#
  curl -OL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/base
  chmod +x base

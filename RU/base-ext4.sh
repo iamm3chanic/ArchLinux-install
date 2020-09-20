@@ -710,7 +710,7 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/RU/chroot
   mv chroot /mnt
   chmod +x /mnt/chroot
   echo 'первый этап готов ' 
@@ -736,7 +736,7 @@ cryptsetup luksHeaderRestore --header-backup-file luksheader.bac /dev/sda1
 read -n 1 -s -r -p "Нажмите любую клавишу для перезагрузки или ctrl+c для прерывания скрипта"
 reboot    
   elif [[ $int == 2 ]]; then
-  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
+  arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
