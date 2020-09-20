@@ -501,7 +501,7 @@ lsblk -f
 read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
  clear
 echo 'Следующая команда потребует ввести YES большими буквами.'
-cryptsetup -y -v luksFormat --type luks2 /dev/$home
+cryptsetup -y -v luksFormat --type luks1 /dev/$home
 cryptsetup open /dev/$home cryptlvm
 
 pvcreate /dev/mapper/cryptlvm
