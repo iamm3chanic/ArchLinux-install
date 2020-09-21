@@ -3,7 +3,7 @@
 echo 'Скрипт второй: настройка системы в chroot '
 timedatectl set-ntp true
 pacman -Syyu  --noconfirm
-pacman -S lvm2
+
 echo ""
 read -p "Введите имя компьютера: " hostname
 echo ""
@@ -316,6 +316,7 @@ do
 done
 if [[ $i_grub == 2 ]]; then
 pacman -S grub   --noconfirm
+clear
 lsblk -f
 read -p "Укажите диск куда установить GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -323,6 +324,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo " установка завершена "
 elif [[ $i_grub == 1 ]]; then
 pacman -S grub grub-customizer os-prober  --noconfirm
+clear
 lsblk -f
 read -p "Укажите диск куда установить GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -337,9 +339,15 @@ fi
 #############################################################
 #########################################################
 ##########################прописать хук
-echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
+echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем keymap — после keyboard:
+   Не забудьте хук \'udev\'или \'btrfs\' если у вас btrfs!
+Для LEGACY:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
+	HOOKS=\"base udev autodetect modconf keyboard keymap block filesystems fsck\"\n
+Для UEFI-systemd:
+	#    usr, fsck and shutdown hooks.
+	HOOKS=\"base systemd autodetect keyboard sd-vconsole modconf block filesystems fsck\"\n"
+read -n 1 -s -r -p "File will be open in nano! \n Press any key to open:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
 ##########

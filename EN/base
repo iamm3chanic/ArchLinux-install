@@ -1,1 +1,46 @@
-
+#!/bin/bash
+#bash
+loadkeys ru
+setfont cyr-sun16
+clear
+echo " 
+Script by @iamm3chanic (based on Poruncov Yuri)
+Ask questions here: https://t.me/g1455_0f_p0rtw1n3
+UEFI or Legacy 
+All partition is in cfdisk! 
+Don't forget to point: 
+(for UEFI):  type=EFI for boot 
+(for BIOS):  type=linux83 + flag bootable
+ТAlso point :
+type=linux82 for swap
+type=linux83 дfor other parts of future system ( root, home ) 
+DON'T FORGET TO WRITE->yes!
+"
+#####
+echo " Which filesystem shall we use?  "
+while 
+    read -n1 -p  "
+    1 - ext4 // suitable for all disks
+    2 - f2fs // works fast on SSD
+    3 - btrfs // developing system for experienced users " x_key 
+    echo ''
+    [[ "$x_key" =~ [^123] ]]
+do
+    :
+done
+if [[ $x_key == 1 ]]; then
+  clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/version1/EN/base-ext4.sh
+  chmod +x base-ext4.sh
+  ./base-ext4.sh
+  elif [[ $x_key == 2 ]]; then
+   clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/version1/EN/base-f2fs.sh 
+  chmod +x base-f2fs.sh
+  ./base-f2fs.sh
+  elif [[ $x_key == 3 ]]; then
+   clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/dev/EN/base-btrfs.sh 
+  chmod +x base-btrfs.sh
+  ./base-btrfs.sh
+fi

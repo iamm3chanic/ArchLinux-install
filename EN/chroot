@@ -64,7 +64,7 @@ echo "KEYMAP=ru" >> /etc/vconsole.conf
 echo "FONT=cyr-sun16" >> /etc/vconsole.conf
 echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf 
 fi 
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
 echo ""
@@ -200,6 +200,7 @@ do
 done
 if [[ $i_grub == 2 ]]; then
 pacman -S grub   --noconfirm
+clear
 lsblk -f
 read -p "Point the disk where to install GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -207,6 +208,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo " installation finished "
 elif [[ $i_grub == 1 ]]; then
 pacman -S grub grub-customizer os-prober  --noconfirm
+clear
 lsblk -f
 read -p "Point the disk where to install GRUB (sda/sdb): " x_boot
 grub-install /dev/$x_boot
@@ -221,9 +223,15 @@ fi
 #############################################################
 #########################################################
 ##########################прописать хук
-echo " Editing /etc/mkinitcpio.conf , in HOOKS add lvm2 — right before filesystems:
+echo " Editing /etc/mkinitcpio.conf , in HOOKS add keymap — right after keyboard:
+   Don't forget to check for a \'udev\' or \'btrfs\' hook if you are using btrfs!
+For LEGACY:
 	#    usr, fsck and shutdown hooks.
-	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
+	HOOKS=\"base udev autodetect modconf keyboard keymap block filesystems fsck\"\n
+For UEFI-systemd:
+	#    usr, fsck and shutdown hooks.
+	HOOKS=\"base systemd autodetect keyboard sd-vconsole modconf block filesystems fsck\"\n"
+read -n 1 -s -r -p "File will be open in nano! \n Press any key to open:"
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
 ##########
