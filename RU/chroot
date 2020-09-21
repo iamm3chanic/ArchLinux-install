@@ -177,7 +177,7 @@ echo "KEYMAP=ru" >> /etc/vconsole.conf
 echo "FONT=cyr-sun16" >> /etc/vconsole.conf
 echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf 
 fi 
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
 echo ""
