@@ -1,0 +1,56 @@
+#!/bin/bash
+#bash
+loadkeys ru
+setfont cyr-sun16
+modprobe dm-mod
+modprobe dm-crypt
+clear
+echo " 
+
+Скрипт писал iamm3chanic (на основе скрипта Порунцова Юрия)
+
+По вопросам https://t.me/g1455_0f_p0rtw1n3
+
+UEFI или Legacy на выбор
+
+Разметка диска производится в cfdisk! 
+
+Не забудьте указать 
+(для UEFI):  type=EFI для boot раздела 
+(для BIOS):  type=linux83 + флажок bootable
+Также указать :
+type=linux82 для swap
+type=linux83 для других разделов будущей системы ( root, home ) 
+
+КАЖДОЕ ИЗМЕНЕНИЕ НЕ ЗАБУДЬТЕ WRITE->yes!
+
+"
+echo " Какую файловую систему будем использовать?  "
+while 
+    read -n1 -p  "
+    1 - ext4 //подходит для всех дисков
+    
+    2 - f2fs //быстро работает на SSD
+    
+    3 - btrfs //развивающаяся система для опытных пользователей " x_key 
+    echo ''
+    [[ "$x_key" =~ [^123] ]]
+do
+    :
+done
+if [[ $x_key == 1 ]]; then
+  clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/version3/RU/base-ext4.sh
+  chmod +x base-ext4.sh
+  ./base-ext4.sh
+  elif [[ $x_key == 2 ]]; then
+   clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/version3/RU/base-f2fs.sh 
+  chmod +x base-f2fs.sh
+  ./base-f2fs.sh
+  elif [[ $x_key == 3 ]]; then
+   clear
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/version3/RU/base-btrfs.sh 
+  chmod +x base-btrfs.sh
+  ./base-btrfs.sh
+fi
