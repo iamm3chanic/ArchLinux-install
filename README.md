@@ -22,8 +22,9 @@
 
 В этом скрипте в любой версии есть две папки - RU и EN.
 Для вашего удобства:
-- раздел диска по-вашему в cfdisk (master, version1, version3)
-- раздел диска по-моему (version2) //временно на исправлении багов...
+- разметка диска по-вашему в cfdisk 
+- версия без ЛВМ для тех, кто неуверен в себе (version1) :)
+- версия с нешифрованным ЛВМ для тех, кто хочет сэкономить время (version2) 
 - шифрование ПОСЛЕ создания логического объёма и монтирования (version3)
 - шифрование ПЕРЕД созданием логического объёма и монтированием (dev)
 - поддержка UEFI и Legacy
@@ -34,7 +35,6 @@
 ### TODO
 + создание шифрованного контейнера перед созданием логического объёма
 + various cryptsetup
-+ версия без LVM
 ### Полезные ссылки
 - [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
 - [Статья Alex Creio](https://creio.github.io/arch-lvm-luks/)
@@ -67,8 +67,9 @@ After successful connection, write:
 
 In this script, in any version there are two folders - Russian and English.
 For your comfort: 
-- partition of disk in your way in cfdisk (master, version1, version3 branch)
-- partition of disk in my way(version2 branch)     //temporary improving bugs...
+- partition of disk in your way in cfdisk 
+- version without LVM for those who are unsure of themselves (version1) :)
+- version with LVM but no encryption to economize time (version2)
 - encryption AFTER logical volume creation and mounting (version 3)
 - encryption BEFORE creating a logical volume and mounting (dev)
 - UEFI and Legacy support
@@ -79,7 +80,6 @@ For your comfort:
 ### TODO
 + creating an encrypted container before creating a logical volume
 + various cryptsetup
-+ no LVM version
 ### Useful links
 - [Arch Wiki LVM](https://wiki.archlinux.org/index.php/LVM)
 - [Alex Creio article](https://creio.github.io/arch-lvm-luks/)
