@@ -44,8 +44,7 @@ lvdisplay
   mount /dev/vg_arch/home /mnt/home/
   mkdir /mnt/boot
   mount /dev/sda1 /mnt/boot
-  cryptsetup -y luksFormat --type luks2 /dev/sda3
-  cryptsetup open /dev/sda3 cryptlvm
+
 ############################### смена зеркал  
 
 pacman -S reflector --noconfirm

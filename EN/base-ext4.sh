@@ -203,11 +203,9 @@ lvdisplay
 read -n 1 -s -r -p "Press any key to continue"
 
 ############ mount ################
-# mkfs.ext2 /dev/sda1 #did above
+
  mkfs.ext4 /dev/vg_arch/root
  mkfs.ext4 /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
 
   mount /dev/vg_arch/root /mnt/
   mkdir /mnt/home
@@ -238,8 +236,6 @@ done
 mount /dev/$bootdd /mnt/boot
 fi
 
-  cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvm
  
 ###################  раздел  ###############################################################
  clear
@@ -523,8 +519,6 @@ done
  echo " skipped "
 fi   
 
- cryptsetup -y luksFormat --type luks2 /dev/$home
- cryptsetup open /dev/$home cryptlvm
 
 ###################  раздел  ###############################################################
 clear

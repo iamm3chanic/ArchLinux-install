@@ -248,10 +248,7 @@ done
 mount /dev/$bootdd /mnt/boot
 fi
  clear
-echo 'Следующая команда потребует ввести YES большими буквами.'  
-  cryptsetup -y luksFormat --type luks2 /dev/$home
-  cryptsetup open /dev/$home cryptlvm
- clear
+#####################################
 echo 'Добавим разделы  Windows (ntfs/fat32)?'
 while 
     read -n1 -p  "
@@ -545,10 +542,6 @@ done
   elif [[ $boots == 2 ]]; then
  echo " идем дальше "
 fi   
-   clear
-echo 'Следующая команда потребует ввести YES большими буквами.'
-   cryptsetup -y luksFormat --type luks2 /dev/$home
-   cryptsetup open /dev/$home cryptlvm
 
 ###################  раздел  ###############################################################
  clear

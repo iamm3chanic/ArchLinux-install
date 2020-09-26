@@ -237,10 +237,8 @@ done
 mount /dev/$bootdd /mnt/boot
 fi
 
- cryptsetup -y luksFormat --type luks2 /dev/$home
- cryptsetup open /dev/$home cryptlvm
- 
-###################  раздел  ###############################################################
+
+ ###############################################################
  clear
 echo 'Add part  Windows (ntfs/fat32)?'
 while 
@@ -523,9 +521,6 @@ done
  echo " skipped "
 fi   
 
-
- cryptsetup -y luksFormat --type luks2 /dev/$home
- cryptsetup open /dev/$home cryptlvm
 
  
 ###################  раздел  ###############################################################
