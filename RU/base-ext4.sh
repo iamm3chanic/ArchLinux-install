@@ -1,29 +1,5 @@
 #!/bin/bash
 #bash
-loadkeys ru
-setfont cyr-sun16
-modprobe dm-mod
-clear
-echo " 
-
-Скрипт писал iamm3chanic (на основе скрипта Порунцова Юрия)
-
-По вопросам https://t.me/g1455_0f_p0rtw1n3
-
-UEFI или Legacy на выбор
-
-Разметка диска производится в cfdisk! 
-
-Не забудьте указать 
-(для UEFI):  type=EFI для boot раздела 
-(для BIOS):  type=linux83 + флажок bootable
-Также указать :
-type=linux82 для swap
-type=linux83 для других разделов будущей системы ( root, home ) 
-
-КАЖДОЕ ИЗМЕНЕНИЕ НЕ ЗАБДЬТЕ WRITE->yes!
-
-"
 #####
 echo " готовы приступить?  "
 while 
@@ -63,7 +39,10 @@ do
 done
 if [[ $x_key == 1 ]]; then
   clear
-  pacman-key --refresh-keys 
+  pacman-key --init 
+  pacman-key --populate
+  pacman-key --refresh-keys --keyserver keys.gnupg.net 
+  pacman -Syy
   elif [[ $x_key == 0 ]]; then
    echo " Обновление ключей пропущено "   
 fi
@@ -170,7 +149,7 @@ done
    clear
  lsblk -f
   echo "Сейчас будет провдиться разметка диска."
-  echo "Создайте 3 раздела: sda1 с флагом boot тип linux 83;"
+  echo "Создайте 3 раздела: sda1 тип EFI system"
   echo "                    sda2 тип linux 82 solaris"
   echo "                    sda3 тип linux 83"
   echo "       будьте внимательны, на sda3 потом появятся"
@@ -189,6 +168,62 @@ fi
   lsblk -f
   echo ""
  
+
+############ swap   ####################################################
+ clear
+ lsblk -f
+while 
+    read -n1 -p  "
+    1 - форматируем и монтируем swap
+    
+    2 - пропустить если swap раздела нет : " swa
+    echo ''
+    [[ "$swa" =~ [^12] ]]
+do
+    :
+done
+ if [[ $swa == 1 ]]; then
+  read -p "Укажите swap раздел(например sda2, nvme0n1p2): " swaps
+  mkswap /dev/$swaps -L swap
+  swapon /dev/$swaps
+  elif [[ $swa == 2 ]]; then
+ echo " идем дальше "
+fi
+ 
+################  home     ############################################################ 
+clear
+echo ""
+echo " Приступаем к созданию логического объема."
+echo ""
+lsblk -f
+read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3): " home
+
+pvcreate /dev/$home
+vgcreate vg_arch /dev/$home
+read -p "\n Сколько гигaбайт отдаем под root?:
+ ! Напишите число и букву G, например 15G !" nor
+lvcreate -L $nor -n root vg_arch
+lvcreate -l 100%FREE -n home vg_arch
+clear
+echo "Вот вывод PVDISPLAY:"
+pvdisplay
+read -n 1 -s -r -p "Press any key to continue"
+clear
+echo "Вот вывод VGDISPLAY:"
+vgdisplay
+read -n 1 -s -r -p "Press any key to continue"
+clear
+echo "Вот вывод LVDISPLAY:"
+lvdisplay
+read -n 1 -s -r -p "Press any key to continue"
+
+############ mount ################
+ mkfs.ext4 /dev/vg_arch/root
+ mkfs.ext4 /dev/vg_arch/home
+
+  mount /dev/vg_arch/root /mnt/
+  mkdir /mnt/home
+  mount /dev/vg_arch/home /mnt/home/
 ########## boot  ########
  clear
  lsblk -f
@@ -205,103 +240,20 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootdd
   mkfs.fat -F32 /dev/$bootd
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 0 ]]; then
- read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd 
+ read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootdd 
  mkdir /mnt/boot
-mount /dev/$bootd /mnt/boot
+mount /dev/$bootdd /mnt/boot
 fi
-############ swap   ####################################################
  clear
- lsblk -f
- 
-  read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
-  mkswap /dev/$swaps -L swap
-  swapon /dev/$swaps
-  
-################  home     ############################################################ 
-clear
-echo ""
-echo " Приступаем к созданию логического объема."
-echo ""
-lsblk -f
-read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
-pvcreate /dev/$home
-vgcreate vg_arch /dev/$home
-read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
-lvcreate -l 100%FREE -n home vg_arch
-clear
-echo "Вот вывод PVDISPLAY:"
-pvdisplay
-read -n 1 -s -r -p "Press any key to continue"
-clear
-echo "Вот вывод VGDISPLAY:"
-vgdisplay
-read -n 1 -s -r -p "Press any key to continue"
-clear
-echo "Вот вывод LVDISPLAY:"
-lvdisplay
-read -n 1 -s -r -p "Press any key to continue"
-
-############ mount ################
-# mkfs.ext2 /dev/sda1 #did above
- mkfs.ext4 /dev/vg_arch/root
- mkfs.ext4 /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
-
-  mount /dev/vg_arch/root /mnt/
-  mkdir /mnt/home
-  mount /dev/vg_arch/home /mnt/home/
-  ######################################################вот тут может быть не то
+echo 'Следующая команда потребует ввести YES большими буквами.'
   cryptsetup -y luksFormat --type luks2 /dev/$home
   cryptsetup open /dev/$home cryptlvm
- # mkdir /mnt/boot #did above
- # mount /dev/sda1 /mnt/boot/ #did above
-#echo 'Добавим раздел  HOME ?'
-#while 
-#    read -n1 -p  "
-#    1 - да
-#    
-#    0 - нет: " homes # sends right after the keypress
-#    echo ''
-#    [[ "$homes" =~ [^10] ]]
-#do
-#    :
-#done
-#   if [[ $homes == 0 ]]; then
-#     echo 'пропущено'
-#  elif [[ $homes == 1 ]]; then
-#    echo ' Форматируем HOME раздел?'
-#while 
-#    read -n1 -p  "
-#    1 - да
-#    
-#    0 - нет: " homeF # sends right after the keypress
-#    echo ''
-#    [[ "$homeF" =~ [^10] ]]
-#do
-#    :
-#done
-#   if [[ $homeF == 1 ]]; then
-#   echo ""
-#   lsblk -f
-#   read -p "Укажите HOME раздел(sda/sdb 1.2.3.4 (sda6 например)):" home
-#   mkfs.ext4 /dev/$home -L home
-#   mkdir /mnt/home 
-#   mount /dev/$home /mnt/home
-#   elif [[ $homeF == 0 ]]; then
-# lsblk -f
-# read -p "Укажите HOME раздел(sda/sdb 1.2.3.4 (sda6 например)):" homeV
-# mkdir /mnt/home 
-# mount /dev/$homeV /mnt/home
-#fi
-#fi
-###################  раздел  ###############################################################
+
  clear
 echo 'Добавим разделы  Windows (ntfs/fat32)?'
 while 
@@ -403,7 +355,7 @@ do
 done
    if [[ $zerkala == 1 ]]; then
 pacman -S reflector --noconfirm
-reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 clear
   elif [[ $zerkala == 0 ]]; then
@@ -431,11 +383,11 @@ do
 done
  if [[ $x_pacstrap == 1 ]]; then
   clear
- pacstrap /mnt base base-devel linux linux-headers dhcpcd  which inetutils netctl wget networkmanager network-manager-applet mkinitcpio git dkms grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
+ pacstrap /mnt base base-devel linux linux-headers dhcpcd  inetutils wget networkmanager network-manager-applet mkinitcpio git grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
  genfstab -p -U /mnt >> /mnt/etc/fstab
  elif [[ $x_pacstrap == 2 ]]; then
   clear
-  pacstrap /mnt base base-devel linux linux-headers dhcpcd which inetutils netctl wget nano vi linux-firmware efibootmgr grub mkinitcpio git dkms
+  pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget nano vi linux-firmware efibootmgr grub mkinitcpio git
   genfstab -p -U /mnt >> /mnt/etc/fstab
   fi 
 ##################################################
@@ -454,23 +406,26 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
-  chmod +x /mnt/chroot.sh 
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+  mv chroot /mnt
+  chmod +x /mnt/chroot
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
   echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
-  arch-chroot /mnt      
+  arch-chroot /mnt  /bin/bash
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+read -n 1 -s -r -p "Press any key to continue"
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+read -n 1 -s -r -p "Press any key to continue"
+umount -R /mnt
 reboot  
 
 fi
@@ -514,13 +469,64 @@ fi
  clear
  lsblk -f
   echo ""
-#read -p "Укажите ROOT раздел( например,):" root
-#echo ""
-#mkfs.ext4 /dev/$root -L root
-#mount /dev/$root /mnt    
-#UUUUUUUUUUUUUUUUUUUUUUUUUU
+  
 
-##############################
+############ swap   ####################################################
+ clear
+ lsblk -f
+while 
+    read -n1 -p  "
+    1 - форматируем и монтируем swap
+    
+    2 - пропустить если swap раздела нет : " swa
+    echo ''
+    [[ "$swa" =~ [^12] ]]
+do
+    :
+done
+ if [[ $swa == 1 ]]; then
+  read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
+  mkswap /dev/$swaps -L swap
+  swapon /dev/$swaps
+  elif [[ $swa == 2 ]]; then
+ echo " идем дальше "
+fi
+ 
+################  home     ############################################################ 
+clear
+echo ""
+echo " Приступаем к созданию логического объема."
+echo ""
+lsblk -f
+read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
+
+pvcreate /dev/$home
+vgcreate vg_arch /dev/$home
+read -p "\n Сколько гигaбайт отдаем под root?:
+ ! Напишите число и букву G, например 15G !" nor
+lvcreate -L $nor -n root vg_arch
+lvcreate -l 100%FREE -n home vg_arch
+clear
+echo "Вот вывод PVDISPLAY:"
+pvdisplay
+read -n 1 -s -r -p "Press any key to continue"
+clear
+echo "Вот вывод VGDISPLAY:"
+vgdisplay
+read -n 1 -s -r -p "Press any key to continue"
+clear
+echo "Вот вывод LVDISPLAY:"
+lvdisplay
+read -n 1 -s -r -p "Press any key to continue"
+
+############ mount ################
+ mkfs.ext4 /dev/vg_arch/root
+ mkfs.ext4 /dev/vg_arch/home
+
+  mount /dev/vg_arch/root /mnt/
+  mkdir /mnt/home
+  mount /dev/vg_arch/home /mnt/home/
+########################
 ########## boot  ########
 echo ' добавим и отформатируем BOOT?'
 echo " Если производиться установка, и у вас уже имеется бут раздел от предыдущей системы "
@@ -537,58 +543,17 @@ do
     :
 done
  if [[ $boots == 1 ]]; then
-  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1):" bootd
-  mkfs.ext2  /dev/$bootd -L boot
+  read -p "Укажите BOOT раздел(например sda1, nvme0n1p1): " bootdd
+  mkfs.ext2  /dev/$bootdd -L boot
   mkdir /mnt/boot
-  mount /dev/$bootd /mnt/boot
+  mount /dev/$bootdd /mnt/boot
   elif [[ $boots == 2 ]]; then
  echo " идем дальше "
-fi   
-
-############ swap   ####################################################
+fi 
  clear
- lsblk -f
- 
-  read -p "Укажите swap раздел(например sda2, nvme0n1p2):" swaps
-  mkswap /dev/$swaps -L swap
-  swapon /dev/$swaps
-  
-################  home     ############################################################ 
-clear
-echo ""
-echo " Приступаем к созданию логического объема."
-echo ""
-lsblk -f
-read -p "Укажите ЛВМ раздел(например sda3, nvme0n1p3):" home
-pvcreate /dev/$home
-vgcreate vg_arch /dev/$home
-read -p "Сколько гигaбайт отдаем под root?:" nor
-lvcreate -L $nor G -n root vg_arch
-lvcreate -l 100%FREE -n home vg_arch
-clear
-echo "Вот вывод PVDISPLAY:"
-pvdisplay
-read -n 1 -s -r -p "Press any key to continue"
-clear
-echo "Вот вывод VGDISPLAY:"
-vgdisplay
-read -n 1 -s -r -p "Press any key to continue"
-clear
-echo "Вот вывод LVDISPLAY:"
-lvdisplay
-read -n 1 -s -r -p "Press any key to continue"
-
-############ mount ################
-# mkfs.ext2 /dev/sda1 #did above
- mkfs.ext4 /dev/vg_arch/root
- mkfs.ext4 /dev/vg_arch/home
-# mkswap /dev/sda2 #did above
-# swapon /dev/sda2 #did above
-
-  mount /dev/vg_arch/root /mnt/
-  mkdir /mnt/home
-  mount /dev/vg_arch/home /mnt/home/
- #
+echo 'Следующая команда потребует ввести YES большими буквами.'
+cryptsetup -y luksFormat --type luks2 /dev/$home
+cryptsetup open /dev/$home cryptlvm
 ###################  раздел  ###############################################################
  clear
 echo 'Добавим разделы  Windows (ntfs/fat32)?'
@@ -689,7 +654,7 @@ do
 done
    if [[ $zerkala == 1 ]]; then
 pacman -S reflector --noconfirm
-reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
 reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
 clear
   elif [[ $zerkala == 0 ]]; then
@@ -716,11 +681,11 @@ do
 done
  if [[ $x_pacstrap == 1 ]]; then
   clear
-  pacstrap /mnt base base-devel linux linux-headers dhcpcd  which inetutils netctl wget networkmanager network-manager-applet mkinitcpio git dkms grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
+  pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget networkmanager network-manager-applet mkinitcpio git grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
   genfstab -pU /mnt >> /mnt/etc/fstab
 elif [[ $x_pacstrap == 2 ]]; then
   clear
-  pacstrap /mnt base base-devel linux linux-headers dhcpcd which inetutils netctl wget nano vi linux-firmware efibootmgr grub mkinitcpio git dkms
+ pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget nano vi linux-firmware efibootmgr grub mkinitcpio git
   genfstab -pU /mnt >> /mnt/etc/fstab
 fi 
  clear
@@ -740,23 +705,26 @@ do
 done
 if [[ $int == 1 ]]; then
 
-  wget -P /mnt https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
-  chmod +x /mnt/chroot.sh 
+  curl -LO https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot
+  mv chroot /mnt
+  chmod +x /mnt/chroot
   echo 'первый этап готов ' 
   echo 'ARCH-LINUX chroot' 
   echo '1. проверь  интернет для продолжения установки в черуте || 2.команда для запуска ./chroot ' 
-  arch-chroot /mnt      
+  arch-chroot /mnt /bin/bash   
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+read -n 1 -s -r -p "Press any key to continue"
+umount -R /mnt
 reboot    
   elif [[ $int == 2 ]]; then
   arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/iamm3chanic/ArchLinux-install/master/RU/chroot)"
 echo "################################################################"
 echo "###################    T H E   E N D      ######################"
 echo "################################################################"
-umount -a
+read -n 1 -s -r -p "Press any key to continue"
+umount -R /mnt
 reboot  
 fi
 
