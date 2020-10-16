@@ -20,9 +20,9 @@
 
 В этом скрипте в любой версии есть две папки - RU и EN.
 Для вашего удобства:
-- раздел диска по-вашему в cfdisk (master, version1, version3)
-- раздел диска по-моему (version2) //временно на исправлении багов...
+- разметка диска по-вашему в cfdisk 
 - версия без ЛВМ для тех, кто неуверен в себе (version1) :)
+- версия с нешифрованным ЛВМ для тех, кто хочет сэкономить время (version2) 
 - шифрование ПОСЛЕ создания логического объёма и монтирования (version3)
 - шифрование ПЕРЕД созданием логического объёма и монтированием (dev)
 - поддержка UEFI и Legacy
@@ -63,9 +63,9 @@ After successful connection, write:
 
 In this script, in any version there are two folders - Russian and English.
 For your comfort: 
-- partition of disk in your way in cfdisk (master, version1, version3 branch)
-- partition of disk in my way(version2 branch)     //temporary improving bugs...
+- partition of disk in your way in cfdisk 
 - version without LVM for those who are unsure of themselves (version1) :)
+- version with LVM but no encryption to economize time (version2)
 - encryption AFTER logical volume creation and mounting (version 3)
 - encryption BEFORE creating a logical volume and mounting (dev)
 - UEFI and Legacy support
@@ -84,5 +84,3 @@ For your comfort:
 ### Thanks a lot:
 - Helper&Base: github.com/poruncov 
 - Tester&Bro: github.com/frutitutitut (github.com/dd1xt5r)
-
-
