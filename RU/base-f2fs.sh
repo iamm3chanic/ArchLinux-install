@@ -359,11 +359,11 @@ do
 done
  if [[ $x_pacstrap == 1 ]]; then
   clear
- pacstrap /mnt base base-devel linux linux-headers dhcpcd  inetutils wget networkmanager network-manager-applet mkinitcpio git grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
+ pacstrap /mnt base base-devel linux linux-headers dhcpcd  inetutils wget networkmanager network-manager-applet mkinitcpio git grub efibootmgr nano vi linux-firmware curl wpa_supplicant dialog
  genfstab -p -U /mnt >> /mnt/etc/fstab
  elif [[ $x_pacstrap == 2 ]]; then
   clear
-  pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget nano vi linux-firmware efibootmgr grub mkinitcpio git
+  pacstrap /mnt base base-devel linux linux-headers dhcpcd inetutils wget nano vi linux-firmware efibootmgr grub mkinitcpio git curl
   genfstab -p -U /mnt >> /mnt/etc/fstab
   fi 
 ##################################################
