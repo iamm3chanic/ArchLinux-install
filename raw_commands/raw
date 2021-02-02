@@ -12,6 +12,7 @@ modprobe dm-crypt
 
 pacman -Sy --noconfirm
 cfdisk
+#будьте внимательны: Ваш диск может называться не sda!
 #fdisk -l /dev/$cfd
 #sda1 - boot
 #sda2 - swap
@@ -217,9 +218,9 @@ Gnome    <-> gdm
 Deepin   <-> lxdm
 Mate     <-> lxdm "
 
+#for example for gnome
 pacman -S gdm --noconfirm
 systemctl enable gdm.service -f
-#for example for gnome
 
 pacman -Sy networkmanager networkmanager-openvpn network-manager-applet ppp --noconfirm
 systemctl enable NetworkManager.service
