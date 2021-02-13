@@ -1,0 +1,231 @@
+#!/bin/bash
+bash
+loadkeys ru
+setfont cyr-sun16
+#ключи
+  pacman-key --init 
+  pacman-key --populate
+  pacman-key --refresh-keys --keyserver keys.gnupg.net 
+  pacman -Syy
+
+pacman -Sy --noconfirm
+cfdisk
+#fdisk -l /dev/$cfd
+#sda1 - boot
+#sda2 - swap
+#sda3 - home
+#sda4 - root
+
+  mkswap /dev/sda2 -L swap
+  swapon /dev/sda2
+  
+################ lvm ########################################## 
+
+ mkfs.ext4 /dev/sda3
+ mkfs.ext4 /dev/sda4
+ mkfs.fat -F32 /dev/sda1        #uefi
+ mkfs.ext2 /dev/sda1  -L boot   #legacy
+
+  mount /dev/sda4 /mnt/
+  mkdir /mnt/home
+  mount /dev/sda3 /mnt/home/
+  mkdir /mnt/boot
+  mount /dev/sda1 /mnt/boot
+
+############################### смена зеркал  
+
+pacman -S reflector --noconfirm
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
+
+pacstrap /mnt base base-devel linux linux-headers dhcpcd  which inetutils netctl wget networkmanager network-manager-applet mkinitcpio git dkms grub efibootmgr nano vi linux-firmware wpa_supplicant dialog
+
+genfstab -p -U /mnt >> /mnt/etc/fstab
+ 
+ 
+##################################################################
+################# chroot #########################################
+##################################################################
+ arch-chroot /mnt 
+bash
+ 
+timedatectl set-ntp true
+pacman -Syyu  --noconfirm
+
+echo $hostname > /etc/hostname
+
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+ 
+#####################################
+
+echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+echo "KEYMAP=ru" >> /etc/vconsole.conf
+echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf 
+echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+locale-gen
+
+passwd
+
+useradd -m -g users -G wheel -s /bin/bash $username
+passwd $username
+
+pacman -S reflector --noconfirm
+reflector --verbose -l 50 -p https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 15 --sort rate --save /etc/pacman.d/mirrorlist
+
+pacman -Syy
+
+#uefi
+bootctl install 
+
+echo ' default arch ' > /boot/loader/loader.conf
+echo ' timeout 10 ' >> /boot/loader/loader.conf
+echo ' editor 0' >> /boot/loader/loader.conf
+echo 'title   Arch Linux' > /boot/loader/entries/arch.conf
+echo "linux  /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+
+#grub
+pacman -S grub  grub-customizer os-prober --noconfirm
+lsblk -f
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+#uefi-grub
+pacman -S grub os-prober --noconfirm
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+#amd
+pacman -S amd-ucode --noconfirm
+echo  'initrd /amd-ucode.img ' >> /boot/loader/entries/arch.conf
+#intel
+pacman -S intel-ucode  --noconfirm
+echo ' initrd /intel-ucode.img ' >> /boot/loader/entries/arch.conf
+
+echo "initrd  /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+
+echo " Редактируем /etc/mkinitcpio.conf , и в HOOKS добавляем lvm2 — перед filesystems:
+	#    usr, fsck and shutdown hooks.
+	HOOKS=\"base udev autodetect modconf block lvm2 filesystems keyboard fsck\""
+nano /etc/mkinitcpio.conf
+mkinitcpio -p linux
+##########
+nano /etc/sudoers
+echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+#it's not beautiful
+nano /etc/pacman.conf
+echo '[multilib]' >> /etc/pacman.conf
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+#it's not beautiful
+
+pacman -Sy xorg-server xorg-drivers --noconfirm
+
+pacman -Syy
+
+
+#KDE
+pacman -S plasma-meta  plasma konsole kde-applications kwalletmanager  latte-dock --noconfirm
+pacman -S xorg-xinit --noconfirm
+cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
+chown $username:users /home/$username/.xinitrc
+chmod +x /home/$username/.xinitrc
+sed -i 52,55d /home/$username/.xinitrc
+echo "exec startplasma-x11 " >> /home/$username/.xinitrc
+mkdir /etc/systemd/system/getty@tty1.service.d/
+echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
+#XFCE
+pacman -S  xfce4  pavucontrol xfce4-goodies  --noconfirm
+pacman -S xorg-xinit --noconfirm
+cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
+chown $username:users /home/$username/.xinitrc
+chmod +x /home/$username/.xinitrc
+sed -i 52,55d /home/$username/.xinitrc
+echo "exec startxfce4 " >> /home/$username/.xinitrc
+mkdir /etc/systemd/system/getty@tty1.service.d/
+echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
+#GNOME
+pacman -S gnome gnome-extra  --noconfirm
+#LXDE
+pacman -S lxde --noconfirm
+pacman -S xorg-xinit --noconfirm
+cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
+chown $username:users /home/$username/.xinitrc
+chmod +x /home/$username/.xinitrc
+sed -i 52,55d /home/$username/.xinitrc
+echo "exec startlxde " >> /home/$username/.xinitrc
+mkdir /etc/systemd/system/getty@tty1.service.d/
+echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
+#LXQT
+pacman -S lxqt lxqt-qtplugin lxqt-themes oxygen-icons xscreensaver --noconfirm
+pacman -S xorg-xinit --noconfirm
+cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
+chown $username:users /home/$username/.xinitrc
+chmod +x /home/$username/.xinitrc
+sed -i 52,55d /home/$username/.xinitrc
+echo "exec startlxqt " >> /home/$username/.xinitrc
+mkdir /etc/systemd/system/getty@tty1.service.d/
+echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
+#i3
+pacman -S i3 i3-wm i3status dmenu --noconfirm
+pacman -S xorg-xinit --noconfirm
+cp /etc/X11/xinit/xinitrc /home/$username/.xinitrc
+chown $username:users /home/$username/.xinitrc
+chmod +x /home/$username/.xinitrc
+sed -i 52,55d /home/$username/.xinitrc
+echo "exec i3 " >> /home/$username/.xinitrc
+mkdir /etc/systemd/system/getty@tty1.service.d/
+echo " [Service] " > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo " ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo   ExecStart=-/usr/bin/agetty --autologin $username --noclear %I 38400 linux >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo ' [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx ' >> /etc/profile
+ 
+echo " 
+Arch-wiki recommends: 
+kde      <-> sddm
+Lxqt     <-> sddm
+xfce(i3) <-> lxdm
+lxde     <-> lxdm
+Gnome    <-> gdm
+Deepin   <-> lxdm
+Mate     <-> lxdm "
+
+pacman -S gdm --noconfirm
+systemctl enable gdm.service -f
+#for example for gnome
+
+pacman -Sy networkmanager networkmanager-openvpn network-manager-applet ppp --noconfirm
+systemctl enable NetworkManager.service
+
+systemctl enable dhcpcd.service
+
+pacman -Sy pulseaudio-bluetooth alsa-utils pulseaudio-equalizer-ladspa   --noconfirm
+
+pacman -Sy exfat-utils ntfs-3g   --noconfirm
+
+
+pacman -S gvfs-afc gvfs-mtp --noconfirm
+pacman -S gparted  --noconfirm
+
+pacman -S firefox firefox-i18n-ru --noconfirm 
+
+  mkdir /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}   
+  chown -R $username:users  /home/$username/{Downloads,Music,Pictures,Videos,Documents,time}
+
+exit 
+umount -R /mnt
+reboot  
+ 
+
