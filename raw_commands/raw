@@ -11,9 +11,10 @@ modprobe dm-crypt
   pacman -Syy
 
 pacman -Sy --noconfirm
-cfdisk
+# для ssd используем sfdisk или пишем cfdisk /dev/nvme0n1
+cfdisk 
 #будьте внимательны: Ваш диск может называться не sda!
-#fdisk -l /dev/$cfd
+#fdisk -l /dev/$your_disk
 #sda1 - boot
 #sda2 - swap
 #sda3 - lvm
