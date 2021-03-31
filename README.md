@@ -43,8 +43,8 @@
 - [Статья на хабре](https://habr.com/ru/post/420081/)
 - [Моя статья](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Благодарность:
-- Помощник, основа: github.com/poruncov
-- Тестировщик, бро: github.com/frutitutitut (github.com/dd1xt5r)
+- Помощник, основа: [@poruncov](https://github.com/poruncov) 
+- Тестировщик, бро: [@frutitutitut](https://github.com/frutitutitut) ([@dd1xt5r](https://github.com/dd1xt5r))
 
 ## EN
 #### Read the script before using and edit if necessary. 
@@ -88,6 +88,6 @@ For your comfort:
 - [Habr article](https://habr.com/ru/post/420081/)
 - [My article](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Thanks a lot:
-- Helper&Base: github.com/poruncov 
-- Tester&Bro: github.com/frutitutitut (github.com/dd1xt5r)
+- Helper&Base: [@poruncov](https://github.com/poruncov) 
+- Tester&Bro: [@frutitutitut](https://github.com/frutitutitut) ([@dd1xt5r](https://github.com/dd1xt5r))
 
