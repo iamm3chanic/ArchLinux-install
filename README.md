@@ -1,13 +1,13 @@
 # ArchLinux-install
 ## RU
-### :white_check_mark: Все версии скрипта проверены на реальном железе: *Acer Nitro-5*, *Fujitsu Lifebook*, *HP Pavilion*, *HP Envy*, *Msi gf63*.
-### :white_check_mark: Более 100 тестов на виртуальной машине Oracle VM, более 20 тестов на vmware. 
+### :white_check_mark: Все версии скрипта проверены на реальных машинах: *Acer Nitro-5*, *Fujitsu Lifebook*, *HP Pavilion*, *HP Envy*, *Msi gf63*.
+### :white_check_mark: Проведено более 100 тестов на виртуальной машине Oracle VM, более 20 тестов на vmware. 
 #### Прочитайте скрипт перед использованием и при необходимости отредактируйте его.
 Для начала сделайте установочный диск так, как он описан здесь:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
 ```
-Затем загрузитесь с этого диска и как-нибудь подключитесь к интернету:
+Затем загрузитесь с этого диска и подключитесь к интернету:
 ```
    https://wiki.archlinux.org/index.php/Network_configuration
    https://wiki.archlinux.org/index.php/Network_configuration/Ethernet
@@ -52,7 +52,7 @@ To start with, make an insallation disk as it is described here:
 ```
    https://wiki.archlinux.org/index.php/USB_flash_installation_medium
 ```
-Then boot from this disk and connect to the Internet somehow:
+Then boot from this disk and connect to the Internet:
 ```
    https://wiki.archlinux.org/index.php/Network_configuration
    https://wiki.archlinux.org/index.php/Network_configuration/Ethernet
