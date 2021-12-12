@@ -44,7 +44,7 @@
 - [Моя статья](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Благодарность:
 - Помощник, основа: [@poruncov](https://github.com/poruncov) 
-- Тестировщик, бро: [@frutitutitut](https://github.com/frutitutitut) ([@dd1xt5r](https://github.com/dd1xt5r))
+- Тестировщик, бро: [@Ilsolang](https://github.com/Ilsolang) ([@frutitutitut](https://github.com/frutitutitut), [@dd1xt5r](https://github.com/dd1xt5r))
 
 ## EN
 #### Read the script before using and edit if necessary. 
@@ -89,5 +89,5 @@ For your comfort:
 - [My article](https://vc.ru/dev/159008-kak-ustanovit-arch-linux-lvm-ustranyaem-populyarnye-oshibki)
 ### Thanks a lot:
 - Helper&Base: [@poruncov](https://github.com/poruncov) 
-- Tester&Bro: [@frutitutitut](https://github.com/frutitutitut) ([@dd1xt5r](https://github.com/dd1xt5r))
+- Tester&Bro: [@Ilsolang](https://github.com/Ilsolang) ([@frutitutitut](https://github.com/frutitutitut), [@dd1xt5r](https://github.com/dd1xt5r))
 
